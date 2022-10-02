@@ -12,7 +12,7 @@ class WallCraft extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Wallyfy',
+      title: 'WallCraft',
       theme: ThemeData(
         primaryColor: Colors.white,
       ),
