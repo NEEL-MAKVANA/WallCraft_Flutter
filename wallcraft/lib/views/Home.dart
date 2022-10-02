@@ -1,8 +1,14 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:wallcraft/data/data.dart';
+import 'package:wallcraft/model/wallpaper_model.dart';
+import 'package:wallcraft/views/category.dart';
+import 'package:wallcraft/views/search.dart';
 import 'package:wallcraft/widgets/widget.dart';
 
 import '../model/categories_model.dart';
+import 'package:http/http.dart' as http;
 
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
@@ -13,8 +19,32 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   List<CategoriesModel> categories = [];
+  List<WallpaperModel> wallpapers = [];
+
+  TextEditingController searchController = new TextEditingController();
+
+  getTrendingWallpapers() async {
+    var response = await http.get(
+        Uri.parse("https://api.pexels.com/v1/curated?per_page=15"),
+        headers: {"Authorization": apiKey});
+
+    // print(response.body.toString());
+
+    Map<String, dynamic> jsonData = jsonDecode(response.body);
+    jsonData["photos"].forEach((element) {
+      // print(element);
+      SrcModel srcModel = new SrcModel();
+      WallpaperModel wallpaperModel = new WallpaperModel(src: srcModel);
+      wallpaperModel = WallpaperModel.fromMap(element);
+      wallpapers.add(wallpaperModel);
+    });
+
+    setState(() {});
+  }
+
   @override
   void initState() {
+    getTrendingWallpapers();
     categories = getCategories();
     super.initState();
   }
@@ -26,13 +56,12 @@ class _HomeState extends State<Home> {
       appBar: AppBar(
         title: brandName(),
         centerTitle: true,
-
         backgroundColor: Colors.white,
         elevation: 0.0,
       ),
-      body: Container(
-        child: Column(
-          children: [
+      body: SingleChildScrollView(
+        child: Container(
+          child: Column(children: [
             Container(
               decoration: BoxDecoration(
                 color: Color(0xfff5f8fd),
@@ -42,9 +71,10 @@ class _HomeState extends State<Home> {
               padding: EdgeInsets.symmetric(horizontal: 24),
               margin: EdgeInsets.symmetric(horizontal: 24),
               child: Row(
-                children: const [
+                children: [
                   Expanded(
                     child: TextField(
+                      controller: searchController,
                       decoration: InputDecoration(
                         // focusedBorder: OutlineInputBorder(
                         //   borderSide: BorderSide(color: Colors.black),
@@ -56,7 +86,17 @@ class _HomeState extends State<Home> {
                       ),
                     ),
                   ),
-                  Icon(Icons.search),
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (contextr) => Search(
+                                    searchQuery: searchController.text,
+                                  )));
+                    },
+                    child: Container(child: Icon(Icons.search)),
+                  ),
                 ],
               ),
             ),
@@ -77,8 +117,12 @@ class _HomeState extends State<Home> {
                   );
                 },
               ),
-            )
-          ],
+            ),
+            SizedBox(
+              height: 16,
+            ),
+            WallpapersList(wallpapers: wallpapers, context: context)
+          ]),
         ),
       ),
     );
@@ -91,25 +135,45 @@ class CategoriesTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: EdgeInsets.only(right: 4),
-      child: Stack(
-        children: [
-
-             ClipRRect(
-               borderRadius: BorderRadius.circular(8),
-                 child: Image.network(imgUrl,height: 50,width: 100,fit: BoxFit.cover
-                   ,)),
-
-          Container(
-            alignment: Alignment.center,
-            color: Colors.black26,
-            height: 50,
-            width: 100,
+    return GestureDetector(
+      onTap: (){
+        Navigator.push(context, MaterialPageRoute(
+            builder: (context) => Categorie(
+              categorieName: title.toLowerCase(),
+            )
+        ));
+      },
+      child: Container(
+        margin: EdgeInsets.only(right: 4),
+        child: Stack(
+          children: [
+            ClipRRect(
+                borderRadius: BorderRadius.circular(8),
+                child: Image.network(
+                  imgUrl,
+                  height: 50,
+                  width: 100,
+                  fit: BoxFit.cover,
+                )),
+            Container(
+              alignment: Alignment.center,
+              decoration: BoxDecoration(
+                color: Colors.black26,
+                borderRadius: BorderRadius.circular(8),
+              ),
+              height: 50,
+              width: 100,
 //we reached at 47 minutes
-            child: Text(title,style: TextStyle(color: Colors.white,fontWeight: FontWeight.w500,fontSize: 15),),
-          ),
-        ],
+              child: Text(
+                title,
+                style: TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.w500,
+                    fontSize: 15),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

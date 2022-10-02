@@ -1,5 +1,7 @@
 import 'package:wallcraft/model/categories_model.dart';
 
+String apiKey = "563492ad6f9170000100000105203463523e4323b2c2d8152bdf71b6";
+
 List<CategoriesModel> getCategories() {
   List<CategoriesModel> categories = [];
   CategoriesModel categorieModel = new CategoriesModel();
