@@ -10,6 +10,8 @@ import 'package:wallcraft/widgets/widget.dart';
 import '../model/categories_model.dart';
 import 'package:http/http.dart' as http;
 
+import 'image_view.dart';
+
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
 
