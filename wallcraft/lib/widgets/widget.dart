@@ -34,6 +34,8 @@ Widget WallpapersList({required List<WallpaperModel> wallpapers, context}) {
                 MaterialPageRoute(
                     builder: (context) => ImageView(
                           imgUrl: wallpapers.src.portrait,
+                          photographer: wallpapers.photographer,
+                          bgColor: wallpapers.avg_color.toString(),
                         )));
           },
           child: Hero(

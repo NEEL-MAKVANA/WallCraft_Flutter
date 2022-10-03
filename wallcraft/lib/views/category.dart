@@ -34,6 +34,7 @@ class _CategorieState extends State<Categorie> {
       SrcModel srcModel = new SrcModel();
       WallpaperModel wallpaperModel = new WallpaperModel(src: srcModel);
       wallpaperModel = WallpaperModel.fromMap(element);
+      wallpaperModel.avg_color = element["avg_color"];
       wallpapers.add(wallpaperModel);
     });
 
