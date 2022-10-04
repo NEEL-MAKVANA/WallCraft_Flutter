@@ -41,10 +41,6 @@ class ImageView extends StatefulWidget {
       return Colors.white;
   }
 
-
-
-
-
   Future<void> shareWallpaper(final String urlImage) async {
     final url = Uri.parse(urlImage);
     final response = await http.get(url);
@@ -54,7 +50,7 @@ class ImageView extends StatefulWidget {
     final path = '${temp.path}/image.jpg';
     File(path).writeAsBytesSync(bytes);
 
-    await Share.shareFiles([path] , text: urlImage);
+    await Share.shareFiles([path], text: urlImage);
   }
   // Future<void> setWallpaperFromFile() async {
   //   String url = "https://images.unsplash.com/photo-1542435503-956c469947f6";
@@ -71,7 +67,6 @@ class ImageView extends StatefulWidget {
 }
 
 class _ImageViewState extends State<ImageView> {
-
   @override
   void initState() {
     // TODO: implement initState
@@ -82,14 +77,10 @@ class _ImageViewState extends State<ImageView> {
 
   //new added 1:
 
+  // final imageurl =
+  //     'https://unsplash.com/photos/AnBzL_yOWBc/download?force=true&w=2400';
 
-  final imageurl =
-      'https://unsplash.com/photos/AnBzL_yOWBc/download?force=true&w=2400';
-  //'https://unsplash.com/photos/1zTg4KT4EtE/download?force=true&w=2400';
-
-  // Image Dimensions are 2400 x 3598
-
-  Future<void> _setwallpaper(location) async {
+  Future<void> _setwallpaper(location, String imageurl) async {
     var file = await DefaultCacheManager().getSingleFile(imageurl);
     try {
       WallpaperManagerFlutter().setwallpaperfromFile(file, location);
@@ -107,11 +98,6 @@ class _ImageViewState extends State<ImageView> {
       print(e);
     }
   }
-
-
-
-
-
 
   var filePath;
 
@@ -252,7 +238,96 @@ class _ImageViewState extends State<ImageView> {
                             ),
                             onPressed: () {
                               print("Wallpaper");
-                              _setwallpaper(WallpaperManagerFlutter.HOME_SCREEN);
+                              // _setwallpaper(WallpaperManagerFlutter.HOME_SCREEN, widget.imgUrl);
+                              showModalBottomSheet(
+                                backgroundColor: Colors.transparent,
+                                isScrollControlled: true,
+                                shape: const RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.vertical(
+                                  top: Radius.circular(30),
+                                )),
+                                context: context,
+                                builder: (BuildContext context) {
+                                  return SizedBox(
+                                    height: 250,
+                                    child: SizedBox(
+                                      height: 200.0,
+                                      child: Column(
+                                        children: [
+                                          const SizedBox(
+                                            height: 30,
+                                          ),
+                                          ElevatedButton.icon(
+                                            style: ElevatedButton.styleFrom(
+                                              // primary: Colors.blue,
+                                              shape: RoundedRectangleBorder(
+                                                borderRadius: BorderRadius.circular(12), // <-- Radius
+                                              ),
+                                              backgroundColor: Colors.deepPurple,
+                                              // side: BorderSide(width:3, color:Colors.brown), //border width and color
+                                              minimumSize: const Size(200, 40), // NEW
+                                            ),// <-- ElevatedButton
+                                            onPressed: () {
+                                              Navigator.pop(context);
+                                              _setwallpaper(WallpaperManagerFlutter.HOME_SCREEN, widget.imgUrl);
+                                            },
+                                            icon: Icon(
+                                              Icons.home_outlined,
+                                              size: 30.0,
+                                            ),
+                                            label: Text('Set As Home Screen'),
+                                          ),
+                                          const SizedBox(
+                                            height: 20,
+                                          ),
+                                          ElevatedButton.icon(
+                                            style: ElevatedButton.styleFrom(
+                                              // primary: Colors.blue,
+                                              shape: RoundedRectangleBorder(
+                                                borderRadius: BorderRadius.circular(12), // <-- Radius
+                                              ),
+                                              backgroundColor: Colors.deepPurple,
+                                              // side: BorderSide(width:3, color:Colors.brown), //border width and color
+                                              minimumSize: const Size(200, 40), // NEW
+                                            ),// <-- ElevatedButton
+                                            onPressed: () {
+                                              Navigator.pop(context);
+                                              _setwallpaper(WallpaperManagerFlutter.LOCK_SCREEN, widget.imgUrl);
+                                            },
+                                            icon: Icon(
+                                              Icons.lock_outline,
+                                              size: 30.0,
+                                            ),
+                                            label: Text('Set As Lock Screen'),
+                                          ),
+                                          const SizedBox(
+                                            height: 20,
+                                          ),
+                                          ElevatedButton(
+                                            style: ElevatedButton.styleFrom(
+                                              // primary: Colors.blue,
+                                              shape: RoundedRectangleBorder(
+                                                borderRadius: BorderRadius.circular(12), // <-- Radius
+                                              ),
+                                              backgroundColor: Colors.deepPurple,
+                                              // side: BorderSide(width:3, color:Colors.brown), //border width and color
+                                              minimumSize: const Size(200, 40), // NEW
+                                            ),
+                                            onPressed: () {
+                                              Navigator.pop(context);
+                                              _setwallpaper(WallpaperManagerFlutter.BOTH_SCREENS, widget.imgUrl);
+                                            },
+                                            child: const Text(
+                                              'Set As Both Screen',
+                                              // style: TextStyle(fontSize: 24),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    )
+                                  );
+                                },
+                              );
                               // widget.setWallpaperFromFile;
                             }),
                       ),
