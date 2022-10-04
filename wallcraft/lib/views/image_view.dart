@@ -1,11 +1,15 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/services.dart';
 import 'package:image_gallery_saver/image_gallery_saver.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'dart:typed_data';
 import 'package:flutter/material.dart';
-import 'dart:io' show Platform;
+import 'dart:io' show File, Platform;
 import 'dart:io' as IO;
+import 'package:http/http.dart' as http;
+
+import 'package:share_plus/share_plus.dart';
 // import 'package:wallpaper_manager/wallpaper_manager.dart';
 // import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 
@@ -29,6 +33,17 @@ class ImageView extends StatefulWidget {
       return Colors.white;
   }
 
+  Future<void> shareWallpaper(final String urlImage) async {
+    final url = Uri.parse(urlImage);
+    final response = await http.get(url);
+    final bytes = response.bodyBytes;
+
+    final temp = await getTemporaryDirectory();
+    final path = '${temp.path}/image.jpg';
+    File(path).writeAsBytesSync(bytes);
+
+    await Share.shareFiles([path] , text: urlImage);
+  }
   // Future<void> setWallpaperFromFile() async {
   //   String url = "https://images.unsplash.com/photo-1542435503-956c469947f6";
   //   int location = WallpaperManager.HOME_SCREEN;
@@ -150,6 +165,7 @@ class _ImageViewState extends State<ImageView> {
                             ),
                             onPressed: () {
                               print("Share");
+                              widget.shareWallpaper(widget.imgUrl);
                             }),
                       ),
                       Padding(
