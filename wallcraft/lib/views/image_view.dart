@@ -4,6 +4,7 @@ import 'package:image_gallery_saver/image_gallery_saver.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
 import 'dart:io' show File, Platform;
 import 'dart:io' as IO;
@@ -12,6 +13,13 @@ import 'package:http/http.dart' as http;
 import 'package:share_plus/share_plus.dart';
 // import 'package:wallpaper_manager/wallpaper_manager.dart';
 // import 'package:flutter_cache_manager/flutter_cache_manager.dart';
+import 'dart:async';
+
+import 'package:flutter/services.dart';
+import 'package:flutter_cache_manager/flutter_cache_manager.dart';
+// import 'package:wallpaper_manager/wallpaper_manager.dart';
+import 'package:flutter_cache_manager/flutter_cache_manager.dart';
+import 'package:wallpaper_manager_flutter/wallpaper_manager_flutter.dart';
 
 class ImageView extends StatefulWidget {
   final String imgUrl;
@@ -32,6 +40,10 @@ class ImageView extends StatefulWidget {
     else
       return Colors.white;
   }
+
+
+
+
 
   Future<void> shareWallpaper(final String urlImage) async {
     final url = Uri.parse(urlImage);
@@ -59,6 +71,7 @@ class ImageView extends StatefulWidget {
 }
 
 class _ImageViewState extends State<ImageView> {
+
   @override
   void initState() {
     // TODO: implement initState
@@ -66,6 +79,39 @@ class _ImageViewState extends State<ImageView> {
     widget.color = widget.bgColor.replaceAll('#', '0xff');
     super.initState();
   }
+
+  //new added 1:
+
+
+  final imageurl =
+      'https://unsplash.com/photos/AnBzL_yOWBc/download?force=true&w=2400';
+  //'https://unsplash.com/photos/1zTg4KT4EtE/download?force=true&w=2400';
+
+  // Image Dimensions are 2400 x 3598
+
+  Future<void> _setwallpaper(location) async {
+    var file = await DefaultCacheManager().getSingleFile(imageurl);
+    try {
+      WallpaperManagerFlutter().setwallpaperfromFile(file, location);
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Wallpaper updated'),
+        ),
+      );
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Error Setting Wallpaper'),
+        ),
+      );
+      print(e);
+    }
+  }
+
+
+
+
+
 
   var filePath;
 
@@ -206,6 +252,7 @@ class _ImageViewState extends State<ImageView> {
                             ),
                             onPressed: () {
                               print("Wallpaper");
+                              _setwallpaper(WallpaperManagerFlutter.HOME_SCREEN);
                               // widget.setWallpaperFromFile;
                             }),
                       ),
