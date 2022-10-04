@@ -23,6 +23,8 @@ class _HomeState extends State<Home> {
   List<CategoriesModel> categories = [];
   List<WallpaperModel> wallpapers = [];
 
+  // ScrollController _scrollController = new ScrollController();
+
   TextEditingController searchController = new TextEditingController();
 
   getTrendingWallpapers() async {
@@ -50,7 +52,22 @@ class _HomeState extends State<Home> {
     getTrendingWallpapers();
     categories = getCategories();
     super.initState();
+
+    // _scrollController.addListener(() {
+    //   print(_scrollController.position.pixels);
+    //   if(_scrollController.position.pixels == _scrollController.position.maxScrollExtent){
+    //     getTrendingWallpapers();
+    //     print("max scroll");
+    //   }
+    // });
   }
+
+  // @override
+  // void dispose() {
+  //   // TODO: implement dispose
+  //   _scrollController.dispose();
+  //   super.dispose();
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -124,7 +141,23 @@ class _HomeState extends State<Home> {
             SizedBox(
               height: 16,
             ),
-            WallpapersList(wallpapers: wallpapers, context: context)
+            // Container(
+            //   height: MediaQuery.of(context).size.height,
+            //   child: ListView.builder(
+            //     // padding: EdgeInsets.symmetric(horizontal: 24),
+            //     controller: _scrollController,
+            //     itemCount: wallpapers.length,
+            //     shrinkWrap: true,
+            //     scrollDirection: Axis.vertical,
+            //     itemBuilder: (context, index) {
+            //       return WallpapersList(wallpapers: wallpapers, context: context);
+            //     },
+            //   ),
+            // ),
+            WallpapersList(wallpapers: wallpapers, context: context),
+            SizedBox(
+              height: 16,
+            ),
           ]),
         ),
       ),
