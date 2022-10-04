@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:wallcraft/views/splash_screen.dart';
 
 import 'views/Home.dart';
 
@@ -17,7 +18,7 @@ class WallCraft extends StatelessWidget {
       theme: ThemeData(
         primaryColor: Colors.white,
       ),
-      home: Home(),
+      home: SplashScreen(),
     );
   }
 }
