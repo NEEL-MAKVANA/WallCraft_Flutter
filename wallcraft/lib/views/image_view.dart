@@ -1,6 +1,8 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/services.dart';
 import 'package:image_gallery_saver/image_gallery_saver.dart';
+import 'package:material_dialogs/material_dialogs.dart';
+import 'package:material_dialogs/widgets/buttons/icon_button.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'dart:typed_data';
@@ -211,7 +213,57 @@ class _ImageViewState extends State<ImageView> {
                                   'Text to announce in accessibility modes',
                             ),
                             onPressed: () {
-                              _save();
+                              Dialogs.materialDialog(
+                                  color: Colors.white,
+                                  msg: 'Do you want to download the wallpaper ?',
+                                  title: 'Download',
+                                  // animation: 'assets/cong_example.json',
+                                  lottieBuilder: Lottie.asset(
+                                    'assets/lottie_download.json',
+                                    fit: BoxFit.contain,
+                                  ),
+                                  context: context,
+                                  actions: [
+                                    IconsButton(
+                                      onPressed: () {Navigator.pop(context);},
+                                      text: 'Cancel',
+                                      iconData: Icons.cancel,
+                                      color: Colors.red,
+                                      textStyle: TextStyle(color: Colors.white),
+                                      iconColor: Colors.white,
+                                    ),
+                                    IconsButton(
+                                      onPressed: () {
+                                        Navigator.pop(context);
+                                        _save();
+                                        ScaffoldMessenger.of(context).showSnackBar(
+                                          SnackBar(
+                                            action: SnackBarAction(
+                                              label: '',
+                                              onPressed: () {
+                                                // Code to execute.
+                                              },
+                                            ),
+                                            content: const Text('Wallpaper Downloaded Successfully.'),
+                                            duration: const Duration(milliseconds: 2500),
+                                            // width: 280.0, // Width of the SnackBar.
+                                            // padding: const EdgeInsets.symmetric(
+                                            //   horizontal: 8.0, // Inner padding for SnackBar content.
+                                            // ),
+                                            behavior: SnackBarBehavior.floating,
+                                            shape: RoundedRectangleBorder(
+                                              borderRadius: BorderRadius.circular(20.0),
+                                            ),
+                                          ),
+                                        );
+                                        },
+                                      text: 'Yes',
+                                      iconData: Icons.done,
+                                      color: Colors.green,
+                                      textStyle: TextStyle(color: Colors.white),
+                                      iconColor: Colors.white,
+                                    ),
+                                  ]);
                             }),
                       ),
                       Padding(
@@ -223,7 +275,7 @@ class _ImageViewState extends State<ImageView> {
                                     'Text to announce in accessibility modes',
                                 color: widget.getColor(widget.color)),
                             onPressed: () {
-                              _save();
+                              print("Favourite");
                             }),
                       ),
                       Padding(
@@ -360,7 +412,7 @@ class _ImageViewState extends State<ImageView> {
     final result =
         await ImageGallerySaver.saveImage(Uint8List.fromList(response.data));
     print(result);
-    Navigator.pop(context);
+    // Navigator.pop(context);
   }
 
   _askPermission() async {
