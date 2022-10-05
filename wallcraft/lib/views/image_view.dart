@@ -28,6 +28,7 @@ class ImageView extends StatefulWidget {
   final String photographer;
   final String bgColor;
   late final String color;
+  Color iconColor = Colors.white;
   ImageView(
       {required this.imgUrl,
       required this.photographer,
@@ -74,6 +75,7 @@ class _ImageViewState extends State<ImageView> {
     // TODO: implement initState
     print("bgColor : " + widget.bgColor);
     widget.color = widget.bgColor.replaceAll('#', '0xff');
+    widget.iconColor = widget.getColor(widget.color);
     super.initState();
   }
 
@@ -215,7 +217,8 @@ class _ImageViewState extends State<ImageView> {
                             onPressed: () {
                               Dialogs.materialDialog(
                                   color: Colors.white,
-                                  msg: 'Do you want to download the wallpaper ?',
+                                  msg:
+                                      'Do you want to download the wallpaper ?',
                                   title: 'Download',
                                   // animation: 'assets/cong_example.json',
                                   lottieBuilder: Lottie.asset(
@@ -225,7 +228,9 @@ class _ImageViewState extends State<ImageView> {
                                   context: context,
                                   actions: [
                                     IconsButton(
-                                      onPressed: () {Navigator.pop(context);},
+                                      onPressed: () {
+                                        Navigator.pop(context);
+                                      },
                                       text: 'Cancel',
                                       iconData: Icons.cancel,
                                       color: Colors.red,
@@ -236,7 +241,8 @@ class _ImageViewState extends State<ImageView> {
                                       onPressed: () {
                                         Navigator.pop(context);
                                         _save();
-                                        ScaffoldMessenger.of(context).showSnackBar(
+                                        ScaffoldMessenger.of(context)
+                                            .showSnackBar(
                                           SnackBar(
                                             action: SnackBarAction(
                                               label: '',
@@ -244,19 +250,22 @@ class _ImageViewState extends State<ImageView> {
                                                 // Code to execute.
                                               },
                                             ),
-                                            content: const Text('Wallpaper Downloaded Successfully.'),
-                                            duration: const Duration(milliseconds: 2500),
+                                            content: const Text(
+                                                'Wallpaper Downloaded Successfully.'),
+                                            duration: const Duration(
+                                                milliseconds: 2500),
                                             // width: 280.0, // Width of the SnackBar.
                                             // padding: const EdgeInsets.symmetric(
                                             //   horizontal: 8.0, // Inner padding for SnackBar content.
                                             // ),
                                             behavior: SnackBarBehavior.floating,
                                             shape: RoundedRectangleBorder(
-                                              borderRadius: BorderRadius.circular(20.0),
+                                              borderRadius:
+                                                  BorderRadius.circular(20.0),
                                             ),
                                           ),
                                         );
-                                        },
+                                      },
                                       text: 'Yes',
                                       iconData: Icons.done,
                                       color: Colors.green,
@@ -267,14 +276,73 @@ class _ImageViewState extends State<ImageView> {
                             }),
                       ),
                       Padding(
-                        padding: const EdgeInsets.all(15.0),
+                        padding: const EdgeInsets.all(13.0),
                         child: IconButton(
-                            icon: Icon(Icons.favorite,
-                                size: 50.0,
-                                semanticLabel:
-                                    'Text to announce in accessibility modes',
-                                color: widget.getColor(widget.color)),
+                            icon: Icon(
+                              Icons.favorite,
+                              size: 50.0,
+                              semanticLabel:
+                                  'Text to announce in accessibility modes',
+                              // color: widget.getColor(widget.color)
+                              color: widget.iconColor,
+                            ),
                             onPressed: () {
+                              setState(() {
+                                if (widget.iconColor != Colors.red) {
+                                  widget.iconColor = Colors.red;
+
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    SnackBar(
+                                      action: SnackBarAction(
+                                        label: '',
+                                        onPressed: () {
+                                          // Code to execute.
+                                        },
+                                      ),
+                                      content: const Text(
+                                          'Wallpaper added to favourites.'),
+                                      duration:
+                                          const Duration(milliseconds: 2500),
+                                      // width: 280.0, // Width of the SnackBar.
+                                      // padding: const EdgeInsets.symmetric(
+                                      //   horizontal: 8.0, // Inner padding for SnackBar content.
+                                      // ),
+                                      behavior: SnackBarBehavior.floating,
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(20.0),
+                                      ),
+                                    ),
+                                  );
+                                } else {
+                                  widget.iconColor =
+                                      widget.getColor(widget.color);
+
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    SnackBar(
+                                      action: SnackBarAction(
+                                        label: '',
+                                        onPressed: () {
+                                          // Code to execute.
+                                        },
+                                      ),
+                                      content: const Text(
+                                          'Wallpaper Removed from favourites.'),
+                                      duration:
+                                          const Duration(milliseconds: 2500),
+                                      // width: 280.0, // Width of the SnackBar.
+                                      // padding: const EdgeInsets.symmetric(
+                                      //   horizontal: 8.0, // Inner padding for SnackBar content.
+                                      // ),
+                                      behavior: SnackBarBehavior.floating,
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(20.0),
+                                      ),
+                                    ),
+                                  );
+                                }
+                              });
                               print("Favourite");
                             }),
                       ),
@@ -301,83 +369,103 @@ class _ImageViewState extends State<ImageView> {
                                 context: context,
                                 builder: (BuildContext context) {
                                   return SizedBox(
-                                    height: 250,
-                                    child: SizedBox(
-                                      height: 200.0,
-                                      child: Column(
-                                        children: [
-                                          const SizedBox(
-                                            height: 30,
-                                          ),
-                                          ElevatedButton.icon(
-                                            style: ElevatedButton.styleFrom(
-                                              // primary: Colors.blue,
-                                              shape: RoundedRectangleBorder(
-                                                borderRadius: BorderRadius.circular(12), // <-- Radius
+                                      height: 250,
+                                      child: SizedBox(
+                                        height: 200.0,
+                                        child: Column(
+                                          children: [
+                                            const SizedBox(
+                                              height: 30,
+                                            ),
+                                            ElevatedButton.icon(
+                                              style: ElevatedButton.styleFrom(
+                                                // primary: Colors.blue,
+                                                shape: RoundedRectangleBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          12), // <-- Radius
+                                                ),
+                                                backgroundColor:
+                                                    Colors.deepPurple,
+                                                // side: BorderSide(width:3, color:Colors.brown), //border width and color
+                                                minimumSize:
+                                                    const Size(200, 40), // NEW
+                                              ), // <-- ElevatedButton
+                                              onPressed: () {
+                                                Navigator.pop(context);
+                                                _setwallpaper(
+                                                    WallpaperManagerFlutter
+                                                        .HOME_SCREEN,
+                                                    widget.imgUrl);
+                                              },
+                                              icon: Icon(
+                                                Icons.home_outlined,
+                                                size: 30.0,
                                               ),
-                                              backgroundColor: Colors.deepPurple,
-                                              // side: BorderSide(width:3, color:Colors.brown), //border width and color
-                                              minimumSize: const Size(200, 40), // NEW
-                                            ),// <-- ElevatedButton
-                                            onPressed: () {
-                                              Navigator.pop(context);
-                                              _setwallpaper(WallpaperManagerFlutter.HOME_SCREEN, widget.imgUrl);
-                                            },
-                                            icon: Icon(
-                                              Icons.home_outlined,
-                                              size: 30.0,
+                                              label: Text('Set As Home Screen'),
                                             ),
-                                            label: Text('Set As Home Screen'),
-                                          ),
-                                          const SizedBox(
-                                            height: 20,
-                                          ),
-                                          ElevatedButton.icon(
-                                            style: ElevatedButton.styleFrom(
-                                              // primary: Colors.blue,
-                                              shape: RoundedRectangleBorder(
-                                                borderRadius: BorderRadius.circular(12), // <-- Radius
+                                            const SizedBox(
+                                              height: 20,
+                                            ),
+                                            ElevatedButton.icon(
+                                              style: ElevatedButton.styleFrom(
+                                                // primary: Colors.blue,
+                                                shape: RoundedRectangleBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          12), // <-- Radius
+                                                ),
+                                                backgroundColor:
+                                                    Colors.deepPurple,
+                                                // side: BorderSide(width:3, color:Colors.brown), //border width and color
+                                                minimumSize:
+                                                    const Size(200, 40), // NEW
+                                              ), // <-- ElevatedButton
+                                              onPressed: () {
+                                                Navigator.pop(context);
+                                                _setwallpaper(
+                                                    WallpaperManagerFlutter
+                                                        .LOCK_SCREEN,
+                                                    widget.imgUrl);
+                                              },
+                                              icon: Icon(
+                                                Icons.lock_outline,
+                                                size: 30.0,
                                               ),
-                                              backgroundColor: Colors.deepPurple,
-                                              // side: BorderSide(width:3, color:Colors.brown), //border width and color
-                                              minimumSize: const Size(200, 40), // NEW
-                                            ),// <-- ElevatedButton
-                                            onPressed: () {
-                                              Navigator.pop(context);
-                                              _setwallpaper(WallpaperManagerFlutter.LOCK_SCREEN, widget.imgUrl);
-                                            },
-                                            icon: Icon(
-                                              Icons.lock_outline,
-                                              size: 30.0,
+                                              label: Text('Set As Lock Screen'),
                                             ),
-                                            label: Text('Set As Lock Screen'),
-                                          ),
-                                          const SizedBox(
-                                            height: 20,
-                                          ),
-                                          ElevatedButton(
-                                            style: ElevatedButton.styleFrom(
-                                              // primary: Colors.blue,
-                                              shape: RoundedRectangleBorder(
-                                                borderRadius: BorderRadius.circular(12), // <-- Radius
+                                            const SizedBox(
+                                              height: 20,
+                                            ),
+                                            ElevatedButton(
+                                              style: ElevatedButton.styleFrom(
+                                                // primary: Colors.blue,
+                                                shape: RoundedRectangleBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          12), // <-- Radius
+                                                ),
+                                                backgroundColor:
+                                                    Colors.deepPurple,
+                                                // side: BorderSide(width:3, color:Colors.brown), //border width and color
+                                                minimumSize:
+                                                    const Size(200, 40), // NEW
                                               ),
-                                              backgroundColor: Colors.deepPurple,
-                                              // side: BorderSide(width:3, color:Colors.brown), //border width and color
-                                              minimumSize: const Size(200, 40), // NEW
+                                              onPressed: () {
+                                                Navigator.pop(context);
+                                                _setwallpaper(
+                                                    WallpaperManagerFlutter
+                                                        .BOTH_SCREENS,
+                                                    widget.imgUrl);
+                                              },
+                                              child: const Text(
+                                                'Set As Both Screen',
+                                                // style: TextStyle(fontSize: 24),
+                                              ),
                                             ),
-                                            onPressed: () {
-                                              Navigator.pop(context);
-                                              _setwallpaper(WallpaperManagerFlutter.BOTH_SCREENS, widget.imgUrl);
-                                            },
-                                            child: const Text(
-                                              'Set As Both Screen',
-                                              // style: TextStyle(fontSize: 24),
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    )
-                                  );
+                                          ],
+                                        ),
+                                      ));
                                 },
                               );
                               // widget.setWallpaperFromFile;
