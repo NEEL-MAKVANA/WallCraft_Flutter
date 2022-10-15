@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:wallcraft/data/data.dart';
 import 'package:wallcraft/model/wallpaper_model.dart';
+import 'package:wallcraft/views/Favorites.dart';
 import 'package:wallcraft/views/category.dart';
 import 'package:wallcraft/views/search.dart';
 import 'package:wallcraft/widgets/widget.dart';
@@ -11,6 +12,7 @@ import '../model/categories_model.dart';
 import 'package:http/http.dart' as http;
 import 'Search_splash.dart';
 import 'image_view.dart';
+import 'my_drawer_header.dart';
 
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
@@ -20,7 +22,8 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  int _currentIndex=0;
+  var currentPage = DrawerSections.Home;
+
   List<CategoriesModel> categories = [];
   List<WallpaperModel> wallpapers = [];
 
@@ -72,14 +75,61 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
+
+    //new added:
+
+
+    // var container;
+    // if (currentPage == DrawerSections.Home) {
+    //   container = DashboardPage();
+    // } else if (currentPage == DrawerSections.Favourites) {
+    //   container = ContactsPage();
+    // } else if (currentPage == DrawerSections.MyWallpapers) {
+    //   container = EventsPage();
+    // } else if (currentPage == DrawerSections.Contacts) {
+    //   container = NotesPage();
+    // }
+    // else if (currentPage == DrawerSections.settings) {
+    //   container = SettingsPage();
+    // } else if (currentPage == DrawerSections.notifications) {
+    //   container = NotificationsPage();
+    // } else if (currentPage == DrawerSections.privacy_policy) {
+    //   container = PrivacyPolicyPage();
+    // } else if (currentPage == DrawerSections.send_feedback) {
+    //   container = SendFeedbackPage();
+    // }
+
+
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        title: brandName(MediaQuery.of(context).size.width, MediaQuery.of(context).size.height),
+        title: brandName(MediaQuery.of(context).size.width,
+            MediaQuery.of(context).size.height),
         centerTitle: true,
         backgroundColor: Colors.white,
         elevation: 0.0,
+        iconTheme: IconThemeData(color: Colors.blue,),
       ),
+
+
+      //drawer :
+
+      drawer: Drawer(
+        child: SingleChildScrollView(
+          child: Container(
+            child: Column(
+              children: [
+                MyHeaderDrawer(),
+                MyDrawerList(),
+              ],
+            ),
+          ),
+        ),
+      ),
+
+
+
+
       body: SingleChildScrollView(
         child: Container(
           child: Column(children: [
@@ -116,8 +166,8 @@ class _HomeState extends State<Home> {
                               //       searchQuery: searchController.text,
                               //     )));
                               builder: (contextr) => SearchSplash(
-                                text: searchController.text,
-                              )));
+                                    text: searchController.text,
+                                  )));
                     },
                     child: Container(child: Icon(Icons.search)),
                   ),
@@ -192,9 +242,110 @@ class _HomeState extends State<Home> {
       // floatingActionButton:
       // FloatingActionButton(child: Icon(Icons.add,), onPressed: () {}),
       // floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-
     );
   }
+
+  //new data added::
+
+
+  Widget MyDrawerList() {
+    return Container(
+      padding: EdgeInsets.only(
+        top: 15,
+      ),
+      child: Column(
+        // shows the list of menu drawer
+        children: [
+          menuItem(1, "Home", Icons.home,
+              currentPage == DrawerSections.Home ? true : false),
+          menuItem(2, "Favorites", Icons.favorite,
+              currentPage == DrawerSections.Favourites ? true : false),
+          menuItem(3, "My Wallpapers", Icons.image,
+              currentPage == DrawerSections.MyWallpapers ? true : false),
+          Divider(),
+          menuItem(4, "Contacts", Icons.people_alt_outlined,
+              currentPage == DrawerSections.Contacts ? true : false),
+          menuItem(5, "About Us", Icons.info,
+              currentPage == DrawerSections.aboutUs ? true : false),
+          Divider(),
+          menuItem(6, "Privacy policy", Icons.privacy_tip_outlined,
+              currentPage == DrawerSections.privacy_policy ? true : false),
+          menuItem(7, "Send feedback", Icons.feedback_outlined,
+              currentPage == DrawerSections.send_feedback ? true : false),
+        ],
+      ),
+    );
+  }
+
+  Widget menuItem(int id, String title, IconData icon, bool selected) {
+    return Material(
+      color: selected ? Colors.grey[300] : Colors.transparent,
+      child: InkWell(
+        onTap: () {
+          Navigator.pop(context);
+          setState(() {
+            if (id == 1) {
+              currentPage = DrawerSections.Home;
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) =>  Home()),
+              );
+            } else if (id == 2) {
+              currentPage = DrawerSections.Favourites;
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) =>  Favorites()),
+              );
+            } else if (id == 3) {
+              currentPage = DrawerSections.MyWallpapers;
+            } else if (id == 4) {
+              currentPage = DrawerSections.Contacts;
+            } else if (id == 5) {
+              currentPage = DrawerSections.aboutUs;
+            } else if (id == 6) {
+              currentPage = DrawerSections.privacy_policy;
+            } else if (id == 7) {
+              currentPage = DrawerSections.send_feedback;
+            }
+          });
+
+        },
+        child: Padding(
+          padding: EdgeInsets.all(15.0),
+          child: Row(
+            children: [
+              Expanded(
+                child: Icon(
+                  icon,
+                  size: 20,
+                  color: Colors.blue,
+                ),
+              ),
+              Expanded(
+                flex: 3,
+                child: Text(
+                  title,
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 16,
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+enum DrawerSections {
+  Home,
+  Favourites,
+  MyWallpapers,
+  Contacts,
+  aboutUs,
+  privacy_policy,
+  send_feedback,
 }
 
 class CategoriesTile extends StatelessWidget {
@@ -204,12 +355,13 @@ class CategoriesTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: (){
-        Navigator.push(context, MaterialPageRoute(
-            builder: (context) => Categorie(
-              categorieName: title.toLowerCase(),
-            )
-        ));
+      onTap: () {
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => Categorie(
+                      categorieName: title.toLowerCase(),
+                    )));
       },
       child: Container(
         margin: EdgeInsets.only(right: 4),
@@ -246,3 +398,29 @@ class CategoriesTile extends StatelessWidget {
     );
   }
 }
+
+
+//drawerlist code:
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -2,6 +2,7 @@
 
 // import 'dart:js';
 
+
 import 'package:flutter/material.dart';
 
 import '../controller/auth_controller.dart';
@@ -11,10 +12,11 @@ import '../views/image_view.dart';
 Widget brandName(double w, double h) {
   print("width: $w");
   return Container(
+
     child: Row(
       children: [
         SizedBox(
-          width: w*0.35,
+          width: w*0.22,
         ),
         RichText(
             text: TextSpan(
@@ -29,7 +31,7 @@ Widget brandName(double w, double h) {
 
 
         SizedBox(
-          width: w*0.16,
+          width: w*0.173,
         ),
 
         Container(
@@ -87,4 +89,11 @@ Widget WallpapersList({required List<WallpaperModel> wallpapers, context}) {
     ),
   );
 }
+
+
+
+
+
+
+
 
