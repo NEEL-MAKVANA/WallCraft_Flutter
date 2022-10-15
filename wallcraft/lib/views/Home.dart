@@ -9,7 +9,7 @@ import 'package:wallcraft/widgets/widget.dart';
 
 import '../model/categories_model.dart';
 import 'package:http/http.dart' as http;
-
+import 'Search_splash.dart';
 import 'image_view.dart';
 
 class Home extends StatefulWidget {
@@ -20,6 +20,7 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+  int _currentIndex=0;
   List<CategoriesModel> categories = [];
   List<WallpaperModel> wallpapers = [];
 
@@ -74,7 +75,7 @@ class _HomeState extends State<Home> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        title: brandName(),
+        title: brandName(MediaQuery.of(context).size.width, MediaQuery.of(context).size.height),
         centerTitle: true,
         backgroundColor: Colors.white,
         elevation: 0.0,
@@ -111,9 +112,12 @@ class _HomeState extends State<Home> {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (contextr) => Search(
-                                    searchQuery: searchController.text,
-                                  )));
+                              // builder: (contextr) => Search(
+                              //       searchQuery: searchController.text,
+                              //     )));
+                              builder: (contextr) => SearchSplash(
+                                text: searchController.text,
+                              )));
                     },
                     child: Container(child: Icon(Icons.search)),
                   ),
@@ -161,6 +165,34 @@ class _HomeState extends State<Home> {
           ]),
         ),
       ),
+
+      // bottomNavigationBar: BottomNavigationBar(
+      //   type: BottomNavigationBarType.fixed, // Fixed
+      //   backgroundColor: Colors.blue, // <-- This works for fixed
+      //   selectedItemColor: Colors.greenAccent,
+      //   unselectedItemColor: Colors.white,
+      //   onTap: (value) {
+      //     // Respond to item press.
+      //     setState(() => _currentIndex = value);
+      //
+      //   },
+      //   items: [
+      //     BottomNavigationBarItem(
+      //       icon: Icon(Icons.menu),
+      //       label: 'menu',
+      //     ),
+      //     BottomNavigationBarItem(
+      //       icon: Icon(Icons.favorite),
+      //       label: 'favourite',
+      //
+      //     ),
+      //
+      //   ],
+      // ),
+      // floatingActionButton:
+      // FloatingActionButton(child: Icon(Icons.add,), onPressed: () {}),
+      // floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+
     );
   }
 }

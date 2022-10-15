@@ -1,17 +1,19 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
+import 'package:wallcraft/views/search.dart';
 
 import 'Home.dart';
 import 'login_page.dart';
 
-class SplashScreen extends StatefulWidget {
-
+class SearchSplash extends StatefulWidget {
+  String text;
+  SearchSplash({Key? key, required this.text}) : super(key: key);
   @override
-  _SplashScreenState createState() => _SplashScreenState();
+  _SearchSplash createState() => _SearchSplash();
 }
 
-class _SplashScreenState extends State<SplashScreen>
+class _SearchSplash extends State<SearchSplash>
     with TickerProviderStateMixin {
   late AnimationController _controller;
 
@@ -25,11 +27,17 @@ class _SplashScreenState extends State<SplashScreen>
   }
 
   @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
         child: Lottie.asset(
-          'assets/splash_lottie.json',
+          'assets/search.json',
           controller: _controller,
           // height: MediaQuery.of(context).size.height * 0.5,
           // width: MediaQuery.of(context).size.width * 0.5,
@@ -41,7 +49,9 @@ class _SplashScreenState extends State<SplashScreen>
               ..duration = composition.duration
               ..forward().whenComplete(() => Navigator.pushReplacement(
                 context,
-                MaterialPageRoute(builder: (context) => Home()),
+                MaterialPageRoute(builder: (context) => Search(
+                  searchQuery: widget.text,
+                )),
               ));
           },
         ),

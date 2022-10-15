@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "602449925819",
+    "project_id": "wallcraft-a6fbd",
+    "storage_bucket": "wallcraft-a6fbd.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:602449925819:android:e2f0e13145303fbde47b9e",
+        "android_client_info": {
+          "package_name": "com.example.wallcraft"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "602449925819-u3ieb2nodbrcrk4rcp30q0h0ii6al6dh.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB2bbXLRZ7eZiLphn2dxQqAbotI28S7Ctg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "602449925819-u3ieb2nodbrcrk4rcp30q0h0ii6al6dh.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

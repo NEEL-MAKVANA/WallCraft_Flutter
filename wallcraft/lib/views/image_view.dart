@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/services.dart';
 import 'package:image_gallery_saver/image_gallery_saver.dart';
 import 'package:material_dialogs/material_dialogs.dart';
@@ -22,6 +23,8 @@ import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 // import 'package:wallpaper_manager/wallpaper_manager.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:wallpaper_manager_flutter/wallpaper_manager_flutter.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class ImageView extends StatefulWidget {
   final String imgUrl;
@@ -37,11 +40,57 @@ class ImageView extends StatefulWidget {
   @override
   State<ImageView> createState() => _ImageViewState();
 
+  CollectionReference favourites = FirebaseFirestore.instance.collection('Favourites');
+  final FirebaseAuth auth = FirebaseAuth.instance;
+  final FirebaseFirestore store = FirebaseFirestore.instance;
+
+  String? UserId() {
+    final User? user = auth.currentUser;
+    final uid = user?.uid;
+    return uid;
+  }
+
   Color getColor(String color) {
     if (Color(int.parse(color)).computeLuminance() > 0.5)
       return Colors.black;
     else
       return Colors.white;
+  }
+
+  Future<void> removeFavourites() async {
+    favourites
+        .where("uid", isEqualTo : UserId())
+        .where("portrait", isEqualTo : imgUrl)
+        .get().then((value){
+      value.docs.forEach((element) {
+        favourites.doc(element.id).delete().then((value){
+          print("Success!");
+        });
+      });
+    });
+  }
+
+  Future<void> addFavourites() async {
+    // Call the user's CollectionReference to add a new user
+    // FirebaseFirestore.instance.collection('Favourites').doc().set(
+    //     {
+    //       'portrait': imgUrl,
+    //       'uid': UserId(),
+    //       'avg_color': bgColor, // John Doe
+    //       'photographer': photographer, // St
+    //     }).then((_){
+    //   print("success!");
+    // });
+
+    return favourites
+        .add({
+      'portrait': imgUrl,
+      'uid': UserId(),
+      'avg_color': bgColor, // John Doe
+      'photographer': photographer, // Stokes and Sons// 42
+    })
+        .then((value) => print("Added to favourites"))
+        .catchError((error) => print("Failed to add to favourites: $error"));
   }
 
   Future<void> shareWallpaper(final String urlImage) async {
@@ -289,8 +338,8 @@ class _ImageViewState extends State<ImageView> {
                             onPressed: () {
                               setState(() {
                                 if (widget.iconColor != Colors.red) {
+                                  widget.addFavourites();
                                   widget.iconColor = Colors.red;
-
                                   ScaffoldMessenger.of(context).showSnackBar(
                                     SnackBar(
                                       action: SnackBarAction(
@@ -315,6 +364,7 @@ class _ImageViewState extends State<ImageView> {
                                     ),
                                   );
                                 } else {
+                                  widget.removeFavourites();
                                   widget.iconColor =
                                       widget.getColor(widget.color);
 

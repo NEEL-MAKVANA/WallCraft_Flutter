@@ -52,7 +52,7 @@ class _CategorieState extends State<Categorie> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: brandName(),
+        title: brandName(MediaQuery.of(context).size.width, MediaQuery.of(context).size.height),
         centerTitle: true,
         backgroundColor: Colors.white,
         elevation: 0.0,

@@ -1,20 +1,52 @@
 // import 'dart:js';
 
+// import 'dart:js';
+
 import 'package:flutter/material.dart';
 
+import '../controller/auth_controller.dart';
 import '../model/wallpaper_model.dart';
 import '../views/image_view.dart';
 
-Widget brandName() {
-  return RichText(
-    text: TextSpan(
-      style: TextStyle(fontSize: 17, fontWeight: FontWeight.w500),
-      children: const <TextSpan>[
-        TextSpan(text: 'Wall', style: TextStyle(color: Colors.black87)),
-        TextSpan(text: 'Craft', style: TextStyle(color: Colors.blue)),
+Widget brandName(double w, double h) {
+  print("width: $w");
+  return Container(
+    child: Row(
+      children: [
+        SizedBox(
+          width: w*0.35,
+        ),
+        RichText(
+            text: TextSpan(
+              style: TextStyle(fontSize: 23, fontWeight: FontWeight.w500,),
+              children: const <TextSpan>[
+                TextSpan(text: 'Wall', style: TextStyle(color: Colors.black87)),
+                TextSpan(text: 'Craft', style: TextStyle(color: Colors.blue)),
+              ],
+            ),
+
+          ),
+
+
+        SizedBox(
+          width: w*0.16,
+        ),
+
+        Container(
+          child: IconButton(
+                color: Colors.blue,
+                icon: const Icon(Icons.logout),
+                tooltip: 'Logout',
+                onPressed: () {
+                  // Navigator.pop(context);
+                  AuthController.instance.logOut();
+                },
+              ),
+        ),
       ],
     ),
   );
+
 }
 
 Widget WallpapersList({required List<WallpaperModel> wallpapers, context}) {
@@ -41,7 +73,7 @@ Widget WallpapersList({required List<WallpaperModel> wallpapers, context}) {
                         )));
           },
           child: Hero(
-            tag: wallpapers.src.portrait ,
+            tag: wallpapers.src.portrait,
             child: Container(
                 child: ClipRRect(
                     borderRadius: BorderRadius.circular(16),
@@ -55,3 +87,4 @@ Widget WallpapersList({required List<WallpaperModel> wallpapers, context}) {
     ),
   );
 }
+

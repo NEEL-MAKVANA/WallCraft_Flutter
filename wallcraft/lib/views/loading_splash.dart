@@ -5,13 +5,13 @@ import 'package:lottie/lottie.dart';
 import 'Home.dart';
 import 'login_page.dart';
 
-class SplashScreen extends StatefulWidget {
+class Loading extends StatefulWidget {
 
   @override
-  _SplashScreenState createState() => _SplashScreenState();
+  _Loading createState() => _Loading();
 }
 
-class _SplashScreenState extends State<SplashScreen>
+class _Loading extends State<Loading>
     with TickerProviderStateMixin {
   late AnimationController _controller;
 
@@ -19,9 +19,15 @@ class _SplashScreenState extends State<SplashScreen>
   void initState() {
     super.initState();
     _controller = AnimationController(
-      duration: Duration(seconds: (5)),
+      duration: Duration(seconds: (1)),
       vsync: this,
     );
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
   }
 
   @override
@@ -29,7 +35,7 @@ class _SplashScreenState extends State<SplashScreen>
     return Scaffold(
       body: Center(
         child: Lottie.asset(
-          'assets/splash_lottie.json',
+          'assets/loading.json',
           controller: _controller,
           // height: MediaQuery.of(context).size.height * 0.5,
           // width: MediaQuery.of(context).size.width * 0.5,
@@ -41,7 +47,7 @@ class _SplashScreenState extends State<SplashScreen>
               ..duration = composition.duration
               ..forward().whenComplete(() => Navigator.pushReplacement(
                 context,
-                MaterialPageRoute(builder: (context) => Home()),
+                MaterialPageRoute(builder: (context) => LoginPage()),
               ));
           },
         ),
