@@ -87,21 +87,4 @@ class AuthController extends GetxController{
     await auth.signOut();
   }
 
-  // void resetPassword({required dynamic email}) async{
-  //   print("inside reset password");
-  //   print(email);
-  //   await auth.sendPasswordResetEmail(email: email);
-  //
-  //
-  // }
-
-  //
-  // Future<AuthStatus> resetPassword({required String email}) async {
-  //   await _auth
-  //       .sendPasswordResetEmail(email: email)
-  //       .then((value) => _status = AuthStatus.successful)
-  //       .catchError((e) => _status = AuthExceptionHandler.handleAuthException(e));
-  //   return _status;
-  // }
-
 }

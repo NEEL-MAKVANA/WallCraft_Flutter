@@ -136,8 +136,32 @@ class _ResetPassState extends State<ResetPass> {
                 onTap: () async {
                   // AuthController.instance.resetPassword(email: emailController.text.trim());
                   // Navigator.of(context).pop();
-                  await FirebaseAuth.instance.sendPasswordResetEmail(email: emailController.text.trim()
-                  );
+                  await FirebaseAuth.instance.sendPasswordResetEmail(email: emailController.text.trim());
+                  ScaffoldMessenger.of(context)
+                      .showSnackBar(
+                      SnackBar(
+                        backgroundColor: Colors.green.shade600,
+                        action: SnackBarAction(
+                          label: '',
+                          onPressed: () {
+                            // Code to execute.
+                          },
+                        ),
+                        content: const Text(
+                            'Password reset link has been sent to your email account.'),
+                        duration: const Duration(
+                            milliseconds: 2500),
+                        // width: 280.0, // Width of the SnackBar.
+                        // padding: const EdgeInsets.symmetric(
+                        //   horizontal: 8.0, // Inner padding for SnackBar content.
+                        // ),
+                        behavior: SnackBarBehavior.floating,
+                        shape: RoundedRectangleBorder(
+                          borderRadius:
+                          BorderRadius.circular(20.0),
+                        ),
+                      ));
+
                 },
                 child: Container(
                   width: w * 0.5,
