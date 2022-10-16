@@ -96,6 +96,7 @@ class _FavoritesState extends State<Favorites> {
         centerTitle: true,
         backgroundColor: Colors.white,
         elevation: 0.0,
+        iconTheme: IconThemeData(color: Colors.blue),
       ),
       body: SingleChildScrollView(
         child: Container(

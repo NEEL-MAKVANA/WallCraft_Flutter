@@ -67,7 +67,7 @@ class ImageView extends StatefulWidget {
   }
 
   Future<void> removeFavourites(context) async {
-    favourites
+    await favourites
         .where("uid", isEqualTo : UserId())
         .where("portrait", isEqualTo : imgUrl)
         .get().then((value){
@@ -78,7 +78,7 @@ class ImageView extends StatefulWidget {
       });
     });
 
-    Navigator.pushAndRemoveUntil(
+    await Navigator.pushAndRemoveUntil(
       context,
       MaterialPageRoute(builder: (context) => Favorites()), // this mymainpage is your page to refresh
           (Route<dynamic> route) => false,
