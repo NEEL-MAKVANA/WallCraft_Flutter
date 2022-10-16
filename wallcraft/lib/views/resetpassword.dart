@@ -20,6 +20,7 @@ class _ResetPassState extends State<ResetPass> {
     return Scaffold(
         backgroundColor: Colors.white,
         appBar: AppBar(
+          iconTheme: IconThemeData(color: Colors.blue),
           title: Text('ResetPassword'),
           centerTitle: true,
           flexibleSpace: Container(

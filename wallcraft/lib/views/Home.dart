@@ -77,28 +77,7 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
 
-    //new added:
 
-
-    // var container;
-    // if (currentPage == DrawerSections.Home) {
-    //   container = DashboardPage();
-    // } else if (currentPage == DrawerSections.Favourites) {
-    //   container = ContactsPage();
-    // } else if (currentPage == DrawerSections.MyWallpapers) {
-    //   container = EventsPage();
-    // } else if (currentPage == DrawerSections.Contacts) {
-    //   container = NotesPage();
-    // }
-    // else if (currentPage == DrawerSections.settings) {
-    //   container = SettingsPage();
-    // } else if (currentPage == DrawerSections.notifications) {
-    //   container = NotificationsPage();
-    // } else if (currentPage == DrawerSections.privacy_policy) {
-    //   container = PrivacyPolicyPage();
-    // } else if (currentPage == DrawerSections.send_feedback) {
-    //   container = SendFeedbackPage();
-    // }
 
 
     return Scaffold(

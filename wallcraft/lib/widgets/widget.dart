@@ -14,9 +14,11 @@ Widget brandName(double w, double h) {
   return Container(
 
     child: Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+
       children: [
         SizedBox(
-          width: w*0.22,
+          width: w*0.00,
         ),
         RichText(
             text: TextSpan(
@@ -30,9 +32,9 @@ Widget brandName(double w, double h) {
           ),
 
 
-        SizedBox(
-          width: w*0.173,
-        ),
+        // SizedBox(
+        //   width: w*0.173,
+        // ),
 
         Container(
           child: IconButton(

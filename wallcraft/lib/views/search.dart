@@ -53,6 +53,7 @@ class _SearchState extends State<Search> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        iconTheme: IconThemeData(color: Colors.blue),
         title: brandName(MediaQuery.of(context).size.width, MediaQuery.of(context).size.height),
         centerTitle: true,
         backgroundColor: Colors.white,
