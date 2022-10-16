@@ -1,11 +1,22 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class MyHeaderDrawer extends StatefulWidget {
   @override
   _MyHeaderDrawerState createState() => _MyHeaderDrawerState();
+
+  String email = FirebaseAuth.instance.currentUser?.email as String;
 }
 
 class _MyHeaderDrawerState extends State<MyHeaderDrawer> {
+
+  @override
+  void initState() {
+    // TODO: implement
+    super.initState();
+    print(widget.email);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -29,14 +40,14 @@ class _MyHeaderDrawerState extends State<MyHeaderDrawer> {
           Padding(
             padding: const EdgeInsets.all(4.0),
             child: Text(
-              "Current UserName",
+              'Hello',
               style: TextStyle(color: Colors.white, fontSize: 20),
             ),
           ),
           Padding(
             padding: const EdgeInsets.all(4.0),
             child: Text(
-              "info@rapidtech.dev",
+              widget.email,
               style: TextStyle(
                 color: Colors.grey[200],
                 fontSize: 14,
