@@ -33,7 +33,7 @@ class _MyHeaderDrawerState extends State<MyHeaderDrawer> {
             decoration: BoxDecoration(
               shape: BoxShape.circle,
               image: DecorationImage(
-                image: AssetImage('assets/logo.png'),
+                image: AssetImage('assets/profile.jpg'),
               ),
             ),
           ),
