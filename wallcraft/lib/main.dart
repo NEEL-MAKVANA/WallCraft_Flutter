@@ -28,7 +28,7 @@ class WallCraft extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'WallCraft',
       theme: ThemeData(
-        primaryColor: Colors.deepPurple,
+        primaryColor: Colors.blue,
       ),
       // home: SplashScreen(),
       // home: LoginPage(),
