@@ -86,6 +86,7 @@ class _FavoritesState extends State<Favorites> {
     wallpapers = [];
     getFavouriteWallpaper();
     super.initState();
+    this.setState(() { });
   }
 
   @override

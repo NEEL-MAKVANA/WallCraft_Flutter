@@ -29,6 +29,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 import 'Favorites.dart';
+import 'favourite_splash.dart';
 
 class ImageView extends StatefulWidget {
   final String imgUrl;
@@ -42,14 +43,14 @@ class ImageView extends StatefulWidget {
       {required this.imgUrl,
       required this.photographer,
       required this.bgColor,
-        this.iconColor = Colors.white,
-        this.isfavourite = false
-  });
+      this.iconColor = Colors.white,
+      this.isfavourite = false});
 
   @override
   State<ImageView> createState() => _ImageViewState();
 
-  CollectionReference favourites = FirebaseFirestore.instance.collection('Favourites');
+  CollectionReference favourites =
+      FirebaseFirestore.instance.collection('Favourites');
   final FirebaseAuth auth = FirebaseAuth.instance;
   final FirebaseFirestore store = FirebaseFirestore.instance;
 
@@ -68,25 +69,21 @@ class ImageView extends StatefulWidget {
 
   Future<void> removeFavourites(context) async {
     await favourites
-        .where("uid", isEqualTo : UserId())
-        .where("portrait", isEqualTo : imgUrl)
-        .get().then((value){
+        .where("uid", isEqualTo: UserId())
+        .where("portrait", isEqualTo: imgUrl)
+        .get()
+        .then((value) {
       value.docs.forEach((element) {
-        favourites.doc(element.id).delete().then((value){
+        favourites.doc(element.id).delete().then((value) {
           print("Success!");
         });
       });
     });
 
-    await Navigator.pushAndRemoveUntil(
-      context,
-      MaterialPageRoute(builder: (context) => Favorites()), // this mymainpage is your page to refresh
-          (Route<dynamic> route) => false,
-    );
+    
   }
 
   Future<void> addFavourites() async {
-
     // int i = 0;
     // favourites
     //     .where("portrait", isEqualTo : imgUrl)
@@ -114,11 +111,11 @@ class ImageView extends StatefulWidget {
 
     return favourites
         .add({
-      'portrait': imgUrl,
-      'uid': UserId(),
-      'avg_color': bgColor, // John Doe
-      'photographer': photographer, // Stokes and Sons// 42
-    })
+          'portrait': imgUrl,
+          'uid': UserId(),
+          'avg_color': bgColor, // John Doe
+          'photographer': photographer, // Stokes and Sons// 42
+        })
         .then((value) => print("Added to favourites"))
         .catchError((error) => print("Failed to add to favourites: $error"));
   }
@@ -156,7 +153,7 @@ class _ImageViewState extends State<ImageView> {
     widget.color = widget.bgColor.replaceAll('#', '0xff');
     widget.iconColor = widget.getColor(widget.color);
 
-    if(widget.isfavourite == true){
+    if (widget.isfavourite == true) {
       widget.iconColor = Colors.red;
     }
     super.initState();
