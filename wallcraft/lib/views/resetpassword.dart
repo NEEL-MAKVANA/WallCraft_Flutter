@@ -1,20 +1,17 @@
-import 'package:flutter/gestures.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:wallcraft/controller/auth_controller.dart';
-import 'package:wallcraft/views/resetpassword.dart';
-import 'package:wallcraft/views/signup_page.dart';
-import 'package:get/get.dart';
 
-class LoginPage extends StatefulWidget {
-  const LoginPage({Key? key}) : super(key: key);
+import '../controller/auth_controller.dart';
+
+class ResetPass extends StatefulWidget {
+  const ResetPass({Key? key}) : super(key: key);
 
   @override
-  State<LoginPage> createState() => _LoginPageState();
+  State<ResetPass> createState() => _ResetPassState();
 }
 
-class _LoginPageState extends State<LoginPage> {
+class _ResetPassState extends State<ResetPass> {
   var emailController = TextEditingController();
-  var passwordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +20,7 @@ class _LoginPageState extends State<LoginPage> {
     return Scaffold(
         backgroundColor: Colors.white,
         appBar: AppBar(
-          title: Text('Login'),
+          title: Text('ResetPassword'),
           centerTitle: true,
           flexibleSpace: Container(
             decoration: const BoxDecoration(
@@ -47,9 +44,9 @@ class _LoginPageState extends State<LoginPage> {
                 margin: EdgeInsets.only(top: 5),
                 decoration: const BoxDecoration(
                     image: DecorationImage(
-                  image: AssetImage("assets/newlogin.png"),
-                  fit: BoxFit.cover,
-                )),
+                      image: AssetImage("assets/newlogin.png"),
+                      fit: BoxFit.cover,
+                    )),
               ),
               Container(
                 width: w,
@@ -65,7 +62,7 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                     ),
                     const Text(
-                      "Sign in to your account",
+                      "Enter Your Email",
                       style: TextStyle(fontSize: 20, color: Colors.grey),
                     ),
                     const SizedBox(height: 25),
@@ -105,35 +102,16 @@ class _LoginPageState extends State<LoginPage> {
                       decoration: BoxDecoration(
                           color: Colors.white,
                           borderRadius: BorderRadius.circular(30),
-                          boxShadow: [
-                            BoxShadow(
-                                blurRadius: 10,
-                                spreadRadius: 7,
-                                offset: const Offset(1, 1),
-                                color: Colors.grey.withOpacity(0.2))
-                          ]),
-                      child: TextField(
-                        controller: passwordController,
-                        obscureText: true,
-                        decoration: InputDecoration(
-                            hintText: "Password",
-                            prefixIcon: const Icon(
-                              Icons.password_rounded,
-                              color: Colors.blue,
-                            ),
-                            focusedBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(30),
-                                borderSide: const BorderSide(
-                                    color: Colors.white, width: 1.0)),
-                            enabledBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(30),
-                                borderSide: const BorderSide(
-                                    color: Colors.white, width: 1.0)),
-                            border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(30))),
+                          // boxShadow: [
+                          //   BoxShadow(
+                          //       blurRadius: 10,
+                          //       spreadRadius: 7,
+                          //       offset: const Offset(1, 1),
+                          //       color: Colors.grey.withOpacity(0.2))
+                          // ]
                       ),
+
                     ),
-                    const SizedBox(height: 15),
                     Row(
                       children: [
                         Expanded(
@@ -143,15 +121,6 @@ class _LoginPageState extends State<LoginPage> {
                         //   "forgot your password?",
                         //   style: TextStyle(fontSize: 20, color: Colors.grey),
                         // ),
-                        TextButton(
-                            onPressed: () => Navigator.of(context).push(
-                                MaterialPageRoute(
-                                    builder: (context) => ResetPass())),
-                            child: Text(
-                              "Forgot Password?",
-                              style:
-                                  TextStyle(fontSize: 20, color: Colors.grey),
-                            ))
                       ],
                     )
                   ],
@@ -161,9 +130,14 @@ class _LoginPageState extends State<LoginPage> {
                 height: 10,
               ),
               GestureDetector(
-                onTap: () {
-                  AuthController.instance.login(emailController.text.trim(),
-                      passwordController.text.trim());
+                // onTap: () {
+                //   AuthController.instance.resetPassword(email:emailController.text.trim());
+                // },
+                onTap: () async {
+                  // AuthController.instance.resetPassword(email: emailController.text.trim());
+                  // Navigator.of(context).pop();
+                  await FirebaseAuth.instance.sendPasswordResetEmail(email: emailController.text.trim()
+                  );
                 },
                 child: Container(
                   width: w * 0.5,
@@ -187,7 +161,7 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                   child: const Center(
                     child: Text(
-                      "Sign In",
+                      "Reset",
                       style: TextStyle(
                         fontSize: 30,
                         fontWeight: FontWeight.bold,
@@ -197,30 +171,8 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                 ),
               ),
-              SizedBox(
-                height: w * 0.03,
-              ),
-              RichText(
-                  text: TextSpan(
-                      text: "Don\'t have an account?",
-                      style: TextStyle(color: Colors.grey[500], fontSize: 20),
-                      children: [
-                    TextSpan(
-                        text: " Create",
-                        style: const TextStyle(
-                          color: Colors.black,
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                        ),
-                        recognizer: TapGestureRecognizer()
-                          ..onTap = () => {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => const SignUpPage()),
-                                )
-                              })
-                  ])),
+
+
             ],
           ),
         ));

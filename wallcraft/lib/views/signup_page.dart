@@ -2,6 +2,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:wallcraft/controller/auth_controller.dart';
+import 'package:wallcraft/views/login_page.dart';
 
 class SignUpPage extends StatelessWidget {
   const SignUpPage({Key? key}) : super(key: key);
@@ -18,7 +19,9 @@ class SignUpPage extends StatelessWidget {
     return Scaffold(
         backgroundColor: Colors.white,
         appBar: AppBar(
-          title: const Center(child: Text('SignUp')),
+          title: Text('SignUp'),
+          centerTitle: true,
+          // centerTitle: true,
           // automaticallyImplyLeading: false,
           // actions: <Widget>[
           //   IconButton(
@@ -35,7 +38,7 @@ class SignUpPage extends StatelessWidget {
                 begin: Alignment.topRight,
                 end: Alignment.bottomLeft,
                 colors: [
-                  Colors.deepPurpleAccent,
+                  Colors.blue,
                   Colors.indigo,
                 ],
               ),
@@ -47,11 +50,11 @@ class SignUpPage extends StatelessWidget {
             children: [
               Container(
                 width: w,
-                height: h * 0.3,
+                height: h * 0.40,
                 margin: EdgeInsets.only(top: 30),
                 decoration: const BoxDecoration(
                     image: DecorationImage(
-                  image: AssetImage("assets/signup.png"),
+                  image: AssetImage("assets/newsignup.png"),
                   fit: BoxFit.cover,
                 )),
               ),
@@ -125,7 +128,7 @@ class SignUpPage extends StatelessWidget {
                             hintText: "Email",
                             prefixIcon: const Icon(
                               Icons.email,
-                              color: Colors.deepPurple,
+                              color: Colors.blue,
                             ),
                             focusedBorder: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(30),
@@ -158,7 +161,7 @@ class SignUpPage extends StatelessWidget {
                             hintText: "Password",
                             prefixIcon: const Icon(
                               Icons.password_rounded,
-                              color: Colors.deepPurple,
+                              color: Colors.blue,
                             ),
                             focusedBorder: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(30),
@@ -196,13 +199,13 @@ class SignUpPage extends StatelessWidget {
                 },
                 child: Container(
                   width: w * 0.5,
-                  height: h * 0.08,
+                  height: h * 0.07,
                   decoration: BoxDecoration(
                     gradient: const LinearGradient(
                       begin: Alignment.topRight,
                       end: Alignment.bottomLeft,
                       colors: [
-                        Colors.deepPurpleAccent,
+                        Colors.blue,
                         Colors.indigo,
                       ],
                     ),
@@ -229,15 +232,45 @@ class SignUpPage extends StatelessWidget {
               SizedBox(
                 height: w * 0.05,
               ),
+              // RichText(
+              //     text: TextSpan(
+              //         recognizer: TapGestureRecognizer()
+              //           ..onTap = () => Get.back(),
+              //         text: "Already Have an account?",
+              //
+              //
+              //         style: TextStyle(
+              //           fontWeight: FontWeight.bold,
+              //           fontSize: 20,
+              //           color: Colors.black,
+              //         )),
+              //
+              // )
+
               RichText(
                   text: TextSpan(
-                      recognizer: TapGestureRecognizer()
-                        ..onTap = () => Get.back(),
-                      text: "Have an account?",
-                      style: TextStyle(
-                        fontSize: 20,
-                        color: Colors.grey[500],
-                      )))
+                      text: "Already Have an Account?",
+                      style: TextStyle(color: Colors.grey[500], fontSize: 20),
+                      children: [
+                        TextSpan(
+                            text: " Login",
+                            style: const TextStyle(
+                              color: Colors.black,
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                            ),
+                            recognizer: TapGestureRecognizer()
+                              ..onTap = () => {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => const LoginPage()),
+                                )
+                              })
+                      ])),
+
+
+
               // SizedBox(
               //   height: w * 0.06,
               // ),
