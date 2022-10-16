@@ -10,10 +10,15 @@ import 'package:wallcraft/widgets/widget.dart';
 
 import '../model/categories_model.dart';
 import 'package:http/http.dart' as http;
+import 'ImageUpload.dart';
 import 'Search_splash.dart';
 import 'favourite_splash.dart';
 import 'image_view.dart';
 import 'my_drawer_header.dart';
+import 'package:firebase_storage/firebase_storage.dart';
+import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
@@ -195,6 +200,7 @@ class _HomeState extends State<Home> {
           ]),
         ),
       ),
+      floatingActionButton: ImageUpload(),
 
       // bottomNavigationBar: BottomNavigationBar(
       //   type: BottomNavigationBarType.fixed, // Fixed
