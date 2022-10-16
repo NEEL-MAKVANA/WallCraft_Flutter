@@ -11,6 +11,7 @@ import 'package:wallcraft/widgets/widget.dart';
 import '../model/categories_model.dart';
 import 'package:http/http.dart' as http;
 import 'Search_splash.dart';
+import 'favourite_splash.dart';
 import 'image_view.dart';
 import 'my_drawer_header.dart';
 
@@ -294,7 +295,7 @@ class _HomeState extends State<Home> {
               currentPage = DrawerSections.Favourites;
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) =>  Favorites()),
+                MaterialPageRoute(builder: (context) =>  FavouriteSplash()),
               );
             } else if (id == 3) {
               currentPage = DrawerSections.MyWallpapers;

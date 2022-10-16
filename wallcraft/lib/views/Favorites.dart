@@ -64,6 +64,7 @@ class _FavoritesState extends State<Favorites> {
     // });
 
     favourites
+        .where("uid", isEqualTo : UserId())
         .get()
         .then((QuerySnapshot querySnapshot) {
       querySnapshot.docs.forEach((element) {
@@ -71,10 +72,11 @@ class _FavoritesState extends State<Favorites> {
         SrcModel src = new SrcModel(portrait: element['portrait']);
         WallpaperModel wallpaperModel = new WallpaperModel(src: src, photographer: element['photographer'], avg_color: element['avg_color']);
         wallpapers.add(wallpaperModel);
+        setState(() {});
       });
     });
 
-    setState(() {});
+
   }
 
   @override

@@ -68,19 +68,35 @@ class ImageView extends StatefulWidget {
         });
       });
     });
+
   }
 
   Future<void> addFavourites() async {
-    // Call the user's CollectionReference to add a new user
-    // FirebaseFirestore.instance.collection('Favourites').doc().set(
-    //     {
-    //       'portrait': imgUrl,
-    //       'uid': UserId(),
-    //       'avg_color': bgColor, // John Doe
-    //       'photographer': photographer, // St
-    //     }).then((_){
-    //   print("success!");
+
+    // int i = 0;
+    // favourites
+    //     .where("portrait", isEqualTo : imgUrl)
+    //     .get()
+    //     .then((QuerySnapshot querySnapshot) {
+    //   querySnapshot.docs.forEach((element) {
+    //     i++;
+    //   });
+    //   print("i is $i");
     // });
+    //
+    // if(i == 0){
+    //   print("i is $i");
+    //   return favourites
+    //       .doc()
+    //       .set({
+    //     'portrait': imgUrl,
+    //     'uid': UserId(),
+    //     'avg_color': bgColor, // John Doe
+    //     'photographer': photographer, // Stokes and Sons// 42
+    //   }, SetOptions(merge: false),)
+    //       .then((value) => print("User Added"))
+    //       .catchError((error) => print("Failed to add user: $error"));
+    // }
 
     return favourites
         .add({
