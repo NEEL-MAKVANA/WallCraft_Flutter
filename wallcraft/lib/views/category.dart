@@ -56,6 +56,7 @@ class _CategorieState extends State<Categorie> {
         centerTitle: true,
         backgroundColor: Colors.white,
         elevation: 0.0,
+        iconTheme: IconThemeData(color: Colors.blue),
       ),
       body: SingleChildScrollView(
         child: Container(

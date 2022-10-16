@@ -470,7 +470,7 @@ class _ImageViewState extends State<ImageView> {
                                                           12), // <-- Radius
                                                 ),
                                                 backgroundColor:
-                                                    Colors.deepPurple,
+                                                    Colors.blue,
                                                 // side: BorderSide(width:3, color:Colors.brown), //border width and color
                                                 minimumSize:
                                                     const Size(200, 40), // NEW
@@ -500,7 +500,7 @@ class _ImageViewState extends State<ImageView> {
                                                           12), // <-- Radius
                                                 ),
                                                 backgroundColor:
-                                                    Colors.deepPurple,
+                                                    Colors.blue,
                                                 // side: BorderSide(width:3, color:Colors.brown), //border width and color
                                                 minimumSize:
                                                     const Size(200, 40), // NEW
@@ -530,7 +530,7 @@ class _ImageViewState extends State<ImageView> {
                                                           12), // <-- Radius
                                                 ),
                                                 backgroundColor:
-                                                    Colors.deepPurple,
+                                                    Colors.blue,
                                                 // side: BorderSide(width:3, color:Colors.brown), //border width and color
                                                 minimumSize:
                                                     const Size(200, 40), // NEW
