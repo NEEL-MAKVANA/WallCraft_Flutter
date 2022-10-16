@@ -6,6 +6,7 @@ import '../data/data.dart';
 import '../model/wallpaper_model.dart';
 import '../widgets/widget.dart';
 import 'package:http/http.dart' as http;
+import 'ImageUpload.dart';
 
 class Search extends StatefulWidget {
 
@@ -23,7 +24,7 @@ class _SearchState extends State<Search> {
 
   getSearchWallpapers(String query) async {
     var response = await http.get(
-        Uri.parse("https://api.pexels.com/v1/search?query=$query&per_page=15"),
+        Uri.parse("https://api.pexels.com/v1/search?query=$query&per_page=80"),
         headers: {"Authorization": apiKey});
 
     // print(response.body.toString());
@@ -94,11 +95,15 @@ class _SearchState extends State<Search> {
               SizedBox(
                 height: 16,
               ),
-              WallpapersList(wallpapers: wallpapers, context: context)
+              WallpapersList(wallpapers: wallpapers, context: context),
+              SizedBox(
+                height: 16,
+              ),
             ],
           ),
         ),
       ),
+      floatingActionButton: ImageUpload(),
     );
   }
 }

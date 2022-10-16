@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -60,7 +61,7 @@ class _ImageUploadState extends State<ImageUpload> {
 
       var snapshot = await _firebaseStorage
           .ref()
-          .child('uploaded_wallpapers/${fileName}')
+          .child('uploaded_wallpapers/${fileName}@${FirebaseAuth.instance.currentUser?.uid as String}')
           .putFile(file);
       var downloadUrl = await snapshot.ref.getDownloadURL();
       setState(() {

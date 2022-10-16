@@ -64,6 +64,7 @@ Widget WallpapersList({required List<WallpaperModel> wallpapers, context, bool i
       mainAxisSpacing: 6.0,
       crossAxisSpacing: 6.0,
       children: wallpapers.map((wallpapers) {
+        // print(wallpapers.src.portrait);
         return GridTile(
             child: GestureDetector(
           onTap: () {

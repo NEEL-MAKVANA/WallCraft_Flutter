@@ -106,7 +106,10 @@ class _FavoritesState extends State<Favorites> {
               SizedBox(
                 height: 16,
               ),
-              WallpapersList(wallpapers: wallpapers, context: context, isfavourite: true)
+              WallpapersList(wallpapers: wallpapers, context: context, isfavourite: true),
+              SizedBox(
+                height: 16,
+              ),
             ],
           ),
         ),

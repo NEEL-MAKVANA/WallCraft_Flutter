@@ -1,5 +1,5 @@
 import 'dart:convert';
-
+import 'ImageUpload.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import '../data/data.dart';
@@ -23,7 +23,7 @@ class _CategorieState extends State<Categorie> {
 
   getSearchWallpapers(String query) async {
     var response = await http.get(
-        Uri.parse("https://api.pexels.com/v1/search?query=$query&per_page=15"),
+        Uri.parse("https://api.pexels.com/v1/search?query=$query&per_page=80"),
         headers: {"Authorization": apiKey});
 
     // print(response.body.toString());
@@ -65,11 +65,15 @@ class _CategorieState extends State<Categorie> {
               SizedBox(
                 height: 16,
               ),
-              WallpapersList(wallpapers: wallpapers, context: context)
+              WallpapersList(wallpapers: wallpapers, context: context),
+              SizedBox(
+                height: 16,
+              ),
             ],
           ),
         ),
       ),
+      floatingActionButton: ImageUpload(),
     );
   }
 }

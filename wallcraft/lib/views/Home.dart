@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:wallcraft/data/data.dart';
 import 'package:wallcraft/model/wallpaper_model.dart';
@@ -8,9 +10,12 @@ import 'package:wallcraft/views/category.dart';
 import 'package:wallcraft/views/search.dart';
 import 'package:wallcraft/widgets/widget.dart';
 
+import '../controller/auth_controller.dart';
 import '../model/categories_model.dart';
 import 'package:http/http.dart' as http;
 import 'ImageUpload.dart';
+import 'MyWallpapers.dart';
+import 'MyWallpapersSplash.dart';
 import 'Search_splash.dart';
 import 'favourite_splash.dart';
 import 'image_view.dart';
@@ -52,6 +57,22 @@ class _HomeState extends State<Home> {
       wallpaperModel = WallpaperModel.fromMap(element);
       wallpaperModel.avg_color = element["avg_color"];
       wallpapers.add(wallpaperModel);
+    });
+
+    final ListResult result = await FirebaseStorage.instance
+        .ref()
+        .child('uploaded_wallpapers')
+        // .child(FirebaseAuth.instance.currentUser?.uid as String)
+        .list();
+    final List<Reference> allFiles = result.items;
+    // print(allFiles.length);
+
+    await Future.forEach<Reference>(allFiles, (file) async {
+        final String fileUrl = await file.getDownloadURL();
+
+        SrcModel src = new SrcModel(portrait: fileUrl);
+        WallpaperModel wallpaperModel = new WallpaperModel(src: src, avg_color: '#000000');
+        wallpapers.add(wallpaperModel);
     });
 
     setState(() {});
@@ -258,6 +279,9 @@ class _HomeState extends State<Home> {
               currentPage == DrawerSections.privacy_policy ? true : false),
           menuItem(7, "Send feedback", Icons.feedback_outlined,
               currentPage == DrawerSections.send_feedback ? true : false),
+          Divider(),
+          menuItem(8, "Logout", Icons.logout,
+              currentPage == DrawerSections.logout ? true : false),
         ],
       ),
     );
@@ -284,6 +308,10 @@ class _HomeState extends State<Home> {
               );
             } else if (id == 3) {
               currentPage = DrawerSections.MyWallpapers;
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) =>  MyWallpapersSplash()),
+              );
             } else if (id == 4) {
               currentPage = DrawerSections.Contacts;
             } else if (id == 5) {
@@ -292,6 +320,9 @@ class _HomeState extends State<Home> {
               currentPage = DrawerSections.privacy_policy;
             } else if (id == 7) {
               currentPage = DrawerSections.send_feedback;
+            } else if (id == 8) {
+              currentPage = DrawerSections.logout;
+              AuthController.instance.logOut();
             }
           });
 
@@ -332,6 +363,7 @@ enum DrawerSections {
   aboutUs,
   privacy_policy,
   send_feedback,
+  logout
 }
 
 class CategoriesTile extends StatelessWidget {
