@@ -51,7 +51,7 @@ Widget brandName(double w, double h) {
 
 }
 
-Widget WallpapersList({required List<WallpaperModel> wallpapers, context}) {
+Widget WallpapersList({required List<WallpaperModel> wallpapers, context, bool isfavourite = false}) {
   return Container(
     padding: EdgeInsets.symmetric(horizontal: 16),
     child: GridView.count(
@@ -72,6 +72,7 @@ Widget WallpapersList({required List<WallpaperModel> wallpapers, context}) {
                           imgUrl: wallpapers.src.portrait,
                           photographer: wallpapers.photographer,
                           bgColor: wallpapers.avg_color.toString(),
+                          isfavourite: isfavourite,
                         )));
           },
           child: Hero(

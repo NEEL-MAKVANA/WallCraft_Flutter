@@ -82,6 +82,8 @@ class _FavoritesState extends State<Favorites> {
   @override
   void initState() {
     // TODO: implement initState
+    print("inside init method");
+    wallpapers = [];
     getFavouriteWallpaper();
     super.initState();
   }
@@ -102,7 +104,7 @@ class _FavoritesState extends State<Favorites> {
               SizedBox(
                 height: 16,
               ),
-              WallpapersList(wallpapers: wallpapers, context: context)
+              WallpapersList(wallpapers: wallpapers, context: context, isfavourite: true)
             ],
           ),
         ),

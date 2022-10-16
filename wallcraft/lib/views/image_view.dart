@@ -1,6 +1,8 @@
 import 'package:dio/dio.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/services.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:image_gallery_saver/image_gallery_saver.dart';
 import 'package:material_dialogs/material_dialogs.dart';
 import 'package:material_dialogs/widgets/buttons/icon_button.dart';
@@ -26,16 +28,23 @@ import 'package:wallpaper_manager_flutter/wallpaper_manager_flutter.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
+import 'Favorites.dart';
+
 class ImageView extends StatefulWidget {
   final String imgUrl;
   final String photographer;
   final String bgColor;
   late final String color;
+  bool isfavourite;
   Color iconColor = Colors.white;
+
   ImageView(
       {required this.imgUrl,
       required this.photographer,
-      required this.bgColor});
+      required this.bgColor,
+        this.iconColor = Colors.white,
+        this.isfavourite = false
+  });
 
   @override
   State<ImageView> createState() => _ImageViewState();
@@ -57,7 +66,7 @@ class ImageView extends StatefulWidget {
       return Colors.white;
   }
 
-  Future<void> removeFavourites() async {
+  Future<void> removeFavourites(context) async {
     favourites
         .where("uid", isEqualTo : UserId())
         .where("portrait", isEqualTo : imgUrl)
@@ -69,6 +78,11 @@ class ImageView extends StatefulWidget {
       });
     });
 
+    Navigator.pushAndRemoveUntil(
+      context,
+      MaterialPageRoute(builder: (context) => Favorites()), // this mymainpage is your page to refresh
+          (Route<dynamic> route) => false,
+    );
   }
 
   Future<void> addFavourites() async {
@@ -141,6 +155,10 @@ class _ImageViewState extends State<ImageView> {
     print("bgColor : " + widget.bgColor);
     widget.color = widget.bgColor.replaceAll('#', '0xff');
     widget.iconColor = widget.getColor(widget.color);
+
+    if(widget.isfavourite == true){
+      widget.iconColor = Colors.red;
+    }
     super.initState();
   }
 
@@ -380,7 +398,7 @@ class _ImageViewState extends State<ImageView> {
                                     ),
                                   );
                                 } else {
-                                  widget.removeFavourites();
+                                  widget.removeFavourites(context);
                                   widget.iconColor =
                                       widget.getColor(widget.color);
 
