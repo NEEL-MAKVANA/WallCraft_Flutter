@@ -10,6 +10,8 @@ import 'package:google_sign_in/google_sign_in.dart';
 import '../views/splash_screen.dart';
 
 class AuthController extends GetxController{
+  var _googleSignin = GoogleSignIn();
+  var googleAccount = Rx<GoogleSignInAccount?>(null);
   static AuthController instance = Get.find();
   late Rx<User?> _user;
   FirebaseAuth auth = FirebaseAuth.instance;
@@ -31,6 +33,12 @@ class AuthController extends GetxController{
       print("inside else");
       Get.offAll(()=> SplashScreen());
     }
+  }
+
+  void googleLogin() async {
+    print("inside google");
+    googleAccount.value = await _googleSignin.signIn();
+    Get.offAll(()=> SplashScreen());
   }
 
   void register(String email, password) async{
