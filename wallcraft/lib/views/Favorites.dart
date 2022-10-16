@@ -80,7 +80,7 @@ class _FavoritesState extends State<Favorites> {
   }
 
   @override
-  void initState() {
+  void initState(){
     // TODO: implement initState
     print("inside init method");
     wallpapers = [];

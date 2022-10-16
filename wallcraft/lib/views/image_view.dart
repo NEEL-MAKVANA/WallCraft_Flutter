@@ -80,7 +80,24 @@ class ImageView extends StatefulWidget {
       });
     });
 
-    
+    // await Navigator.pushAndRemoveUntil(
+    //   context,
+    //   MaterialPageRoute(
+    //       builder: (context) =>
+    //           Favorites()), // this mymainpage is your page to refresh
+    //       (Route<dynamic> route) => false,
+    // );
+
+    if(this.isfavourite == true){
+      Navigator.pop(context);
+      Navigator.pop(context);
+      Navigator.push<void>(
+        context,
+        MaterialPageRoute<void>(
+          builder: (BuildContext context) =>  Favorites(),
+        ),
+      );
+    }
   }
 
   Future<void> addFavourites() async {
@@ -467,7 +484,7 @@ class _ImageViewState extends State<ImageView> {
                                                           12), // <-- Radius
                                                 ),
                                                 backgroundColor:
-                                                    Colors.blue,
+                                                    Colors.deepPurple,
                                                 // side: BorderSide(width:3, color:Colors.brown), //border width and color
                                                 minimumSize:
                                                     const Size(200, 40), // NEW
@@ -497,7 +514,7 @@ class _ImageViewState extends State<ImageView> {
                                                           12), // <-- Radius
                                                 ),
                                                 backgroundColor:
-                                                    Colors.blue,
+                                                    Colors.deepPurple,
                                                 // side: BorderSide(width:3, color:Colors.brown), //border width and color
                                                 minimumSize:
                                                     const Size(200, 40), // NEW
@@ -527,7 +544,7 @@ class _ImageViewState extends State<ImageView> {
                                                           12), // <-- Radius
                                                 ),
                                                 backgroundColor:
-                                                    Colors.blue,
+                                                    Colors.deepPurple,
                                                 // side: BorderSide(width:3, color:Colors.brown), //border width and color
                                                 minimumSize:
                                                     const Size(200, 40), // NEW
