@@ -1,5 +1,6 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+
 import 'package:wallcraft/controller/auth_controller.dart';
 import 'package:wallcraft/views/resetpassword.dart';
 import 'package:wallcraft/views/signup_page.dart';
@@ -45,7 +46,7 @@ class _LoginPageState extends State<LoginPage> {
               Container(
                 width: w,
                 height: h * 0.35,
-                margin: EdgeInsets.only(top: 5),
+                margin: EdgeInsets.only(top: 1),
                 decoration: const BoxDecoration(
                     image: DecorationImage(
                   image: AssetImage("assets/newlogin.png"),
@@ -54,14 +55,14 @@ class _LoginPageState extends State<LoginPage> {
               ),
               Container(
                 width: w,
-                margin: const EdgeInsets.only(left: 20, right: 20, top: 20),
+                margin: const EdgeInsets.only(left: 20, right: 20, top: 0),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     const Text(
                       "Hello",
                       style: TextStyle(
-                        fontSize: 50,
+                        fontSize: 40,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
@@ -69,7 +70,7 @@ class _LoginPageState extends State<LoginPage> {
                       "Sign in to your account",
                       style: TextStyle(fontSize: 20, color: Colors.grey),
                     ),
-                    const SizedBox(height: 25),
+                    const SizedBox(height: 20),
                     Container(
                       decoration: BoxDecoration(
                           color: Colors.white,
@@ -134,7 +135,7 @@ class _LoginPageState extends State<LoginPage> {
                                 borderRadius: BorderRadius.circular(30))),
                       ),
                     ),
-                    const SizedBox(height: 15),
+                    const SizedBox(height: 10),
                     Row(
                       children: [
                         Expanded(
@@ -201,6 +202,66 @@ class _LoginPageState extends State<LoginPage> {
               SizedBox(
                 height: w * 0.03,
               ),
+              Text("OR"),
+              // Divider(),
+              SizedBox(
+                height: 10,
+              ),
+              GestureDetector(
+                onTap: () {
+                },
+                child: Container(
+                  width: w * 0.50,
+                  height: h * 0.055,
+                  decoration: BoxDecoration(
+                    // gradient: const LinearGradient(
+                    //   begin: Alignment.topRight,
+                    //   end: Alignment.bottomLeft,
+                    //   colors: [
+                    //     Colors.blue,
+                    //     Colors.indigo,
+                    //   ],
+                    // ),
+                    borderRadius: BorderRadius.circular(32),
+                    //     image: DecorationImage(
+                    //       image: AssetImage(
+                    //           "img/login.png"
+                    //       ),
+                    //       fit: BoxFit.cover,
+                    //     )
+                  ),
+                  child: Center(
+                    child: FloatingActionButton.extended(
+                      onPressed: () {
+                        print("hello from sign in with google");
+
+                      },
+                      icon: Image.asset(
+                        'assets/google.png',
+                        height: 32,
+                        width: 32,
+
+                      ),
+                      label: Text("Sign With Google"),
+                      backgroundColor: Colors.white,
+                      foregroundColor: Colors.black,
+                    ),
+
+                    // child: Text(
+                    //   "Sign In With Google",
+                    //   style: TextStyle(
+                    //     fontSize: 20,
+                    //     fontWeight: FontWeight.bold,
+                    //     color: Colors.white,
+                    //   ),
+                    // ),
+                  ),
+                ),
+              ),
+
+              SizedBox(
+                height: 20,
+              ),
               RichText(
                   text: TextSpan(
                       text: "Don\'t have an account?",
@@ -222,6 +283,9 @@ class _LoginPageState extends State<LoginPage> {
                                 )
                               })
                   ])),
+              SizedBox(
+                height: 20,
+              )
             ],
           ),
         ));
