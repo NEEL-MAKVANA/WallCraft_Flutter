@@ -9,14 +9,11 @@ import '../model/wallpaper_model.dart';
 import '../widgets/widget.dart';
 
 class Favorites extends StatefulWidget {
-
-
   @override
   State<Favorites> createState() => _FavoritesState();
 }
 
 class _FavoritesState extends State<Favorites> {
-
   // TextEditingController searchController = new TextEditingController();
 
   List<WallpaperModel> wallpapers = [];
@@ -41,7 +38,8 @@ class _FavoritesState extends State<Favorites> {
   //   setState(() {});
   // }
 
-  CollectionReference favourites = FirebaseFirestore.instance.collection('Favourites');
+  CollectionReference favourites =
+      FirebaseFirestore.instance.collection('Favourites');
   final FirebaseAuth auth = FirebaseAuth.instance;
   final FirebaseFirestore store = FirebaseFirestore.instance;
 
@@ -64,36 +62,38 @@ class _FavoritesState extends State<Favorites> {
     // });
 
     favourites
-        .where("uid", isEqualTo : UserId())
+        .where("uid", isEqualTo: UserId())
         .get()
         .then((QuerySnapshot querySnapshot) {
       querySnapshot.docs.forEach((element) {
         print(element['portrait']);
         SrcModel src = new SrcModel(portrait: element['portrait']);
-        WallpaperModel wallpaperModel = new WallpaperModel(src: src, photographer: element['photographer'], avg_color: element['avg_color']);
+        WallpaperModel wallpaperModel = new WallpaperModel(
+            src: src,
+            photographer: element['photographer'],
+            avg_color: element['avg_color']);
         wallpapers.add(wallpaperModel);
         setState(() {});
       });
     });
-
-
   }
 
   @override
-  void initState(){
+  void initState() {
     // TODO: implement initState
     print("inside init method");
     wallpapers = [];
     getFavouriteWallpaper();
     super.initState();
-    this.setState(() { });
+    this.setState(() {});
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: brandName(MediaQuery.of(context).size.width, MediaQuery.of(context).size.height),
+        title: brandName(MediaQuery.of(context).size.width,
+            MediaQuery.of(context).size.height),
         centerTitle: true,
         backgroundColor: Colors.white,
         elevation: 0.0,
@@ -106,7 +106,8 @@ class _FavoritesState extends State<Favorites> {
               SizedBox(
                 height: 16,
               ),
-              WallpapersList(wallpapers: wallpapers, context: context, isfavourite: true),
+              WallpapersList(
+                  wallpapers: wallpapers, context: context, isfavourite: true),
               SizedBox(
                 height: 16,
               ),

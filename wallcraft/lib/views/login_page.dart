@@ -209,8 +209,7 @@ class _LoginPageState extends State<LoginPage> {
                 height: 10,
               ),
               GestureDetector(
-                onTap: () {
-                },
+                onTap: () {},
                 child: Container(
                   width: w * 0.50,
                   height: h * 0.055,
@@ -240,7 +239,6 @@ class _LoginPageState extends State<LoginPage> {
                         'assets/google.png',
                         height: 32,
                         width: 32,
-
                       ),
                       label: Text("Sign With Google"),
                       backgroundColor: Colors.white,

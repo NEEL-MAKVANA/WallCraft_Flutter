@@ -7,7 +7,6 @@ import '../model/wallpaper_model.dart';
 import '../widgets/widget.dart';
 
 class Categorie extends StatefulWidget {
-
   final String categorieName;
   Categorie({required this.categorieName});
 
@@ -16,7 +15,6 @@ class Categorie extends StatefulWidget {
 }
 
 class _CategorieState extends State<Categorie> {
-
   TextEditingController searchController = new TextEditingController();
 
   List<WallpaperModel> wallpapers = [];
@@ -52,7 +50,8 @@ class _CategorieState extends State<Categorie> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: brandName(MediaQuery.of(context).size.width, MediaQuery.of(context).size.height),
+        title: brandName(MediaQuery.of(context).size.width,
+            MediaQuery.of(context).size.height),
         centerTitle: true,
         backgroundColor: Colors.white,
         elevation: 0.0,

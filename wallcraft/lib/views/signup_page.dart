@@ -9,7 +9,6 @@ class SignUpPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     var emailController = TextEditingController();
     var passwordController = TextEditingController();
     // var userController = TextEditingController();
@@ -195,8 +194,9 @@ class SignUpPage extends StatelessWidget {
                 height: w * 0.1,
               ),
               GestureDetector(
-                onTap: (){
-                  AuthController.instance.register(emailController.text.trim(), passwordController.text.trim());
+                onTap: () {
+                  AuthController.instance.register(emailController.text.trim(),
+                      passwordController.text.trim());
                 },
                 child: Container(
                   width: w * 0.5,
@@ -253,24 +253,22 @@ class SignUpPage extends StatelessWidget {
                       text: "Already Have an Account?",
                       style: TextStyle(color: Colors.grey[500], fontSize: 20),
                       children: [
-                        TextSpan(
-                            text: " Login",
-                            style: const TextStyle(
-                              color: Colors.black,
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold,
-                            ),
-                            recognizer: TapGestureRecognizer()
-                              ..onTap = () => {
+                    TextSpan(
+                        text: " Login",
+                        style: const TextStyle(
+                          color: Colors.black,
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                        ),
+                        recognizer: TapGestureRecognizer()
+                          ..onTap = () => {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
                                       builder: (context) => const LoginPage()),
                                 )
                               })
-                      ])),
-
-
+                  ])),
 
               // SizedBox(
               //   height: w * 0.06,

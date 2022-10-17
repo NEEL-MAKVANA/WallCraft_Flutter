@@ -37,7 +37,7 @@ class _MyWallpapersSplash extends State<MyWallpapersSplash>
     return Scaffold(
       body: Center(
         child: Lottie.asset(
-          'assets/favourite.json',
+          'assets/myWallpaper.json',
           controller: _controller,
           // height: MediaQuery.of(context).size.height * 0.5,
           // width: MediaQuery.of(context).size.width * 0.5,

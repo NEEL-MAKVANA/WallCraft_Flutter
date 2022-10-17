@@ -5,6 +5,7 @@ import 'package:wallcraft/views/search.dart';
 
 import 'Favorites.dart';
 import 'Home.dart';
+import 'MyWallpapers.dart';
 import 'login_page.dart';
 
 class MyWallpapersSplash extends StatefulWidget {
@@ -36,7 +37,7 @@ class _MyWallpapersSplash extends State<MyWallpapersSplash>
     return Scaffold(
       body: Center(
         child: Lottie.asset(
-          'assets/myWallpaper .json',
+          'assets/myWallpaper.json',
           controller: _controller,
           // height: MediaQuery.of(context).size.height * 0.5,
           // width: MediaQuery.of(context).size.width * 0.5,
@@ -48,7 +49,7 @@ class _MyWallpapersSplash extends State<MyWallpapersSplash>
               ..duration = composition.duration
               ..forward().whenComplete(() => Navigator.pushReplacement(
                 context,
-                MaterialPageRoute(builder: (context) => Favorites(
+                MaterialPageRoute(builder: (context) => MyWallpapers(
                 )),
               ));
           },

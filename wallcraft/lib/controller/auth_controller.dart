@@ -9,7 +9,7 @@ import 'package:google_sign_in/google_sign_in.dart';
 
 import '../views/splash_screen.dart';
 
-class AuthController extends GetxController{
+class AuthController extends GetxController {
   var _googleSignin = GoogleSignIn();
   var googleAccount = Rx<GoogleSignInAccount?>(null);
   static AuthController instance = Get.find();
@@ -17,85 +17,69 @@ class AuthController extends GetxController{
   FirebaseAuth auth = FirebaseAuth.instance;
 
   @override
-  void onReady(){
+  void onReady() {
     super.onReady();
     _user = Rx<User?>(auth.currentUser);
-    _user.bindStream(auth.userChanges());//user will be notified
+    _user.bindStream(auth.userChanges()); //user will be notified
     ever(_user, _initialScreen);
   }
 
-  _initialScreen(User? user){
-    if(user == null){
+  _initialScreen(User? user) {
+    if (user == null) {
       print("login page");
-      Get.offAll(()=>const LoginPage());
-    }
-    else{
+      Get.offAll(() => const LoginPage());
+    } else {
       print("inside else");
-      Get.offAll(()=> SplashScreen());
+      Get.offAll(() => SplashScreen());
     }
   }
 
   void googleLogin() async {
     print("inside google");
     googleAccount.value = await _googleSignin.signIn();
-    Get.offAll(()=> SplashScreen());
+    Get.offAll(() => SplashScreen());
   }
 
-  void register(String email, password) async{
-    try{
-     await auth.createUserWithEmailAndPassword(email: email, password: password);
-    }catch(e){
+  void register(String email, password) async {
+    try {
+      await auth.createUserWithEmailAndPassword(
+          email: email, password: password);
+    } catch (e) {
       Get.snackbar("About User", "User message",
-      backgroundColor: Colors.redAccent,
-      margin: EdgeInsets.all(5),
-      snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Colors.redAccent,
+          margin: EdgeInsets.all(5),
+          snackPosition: SnackPosition.BOTTOM,
           titleText: const Text(
             "Account creation failed",
-            style: TextStyle(
-              color: Colors.white
-            ),
+            style: TextStyle(color: Colors.white),
           ),
-        messageText: Text(
-          e.toString(),
-          style: const TextStyle(
-              color: Colors.white
-          ),
-        )
-      );
-
+          messageText: Text(
+            e.toString(),
+            style: const TextStyle(color: Colors.white),
+          ));
     }
   }
 
-  void login(String email, password) async{
-    try{
+  void login(String email, password) async {
+    try {
       await auth.signInWithEmailAndPassword(email: email, password: password);
       print("inside login");
-    }catch(e){
+    } catch (e) {
       Get.snackbar("About Login", "Login message",
           backgroundColor: Colors.redAccent,
           snackPosition: SnackPosition.BOTTOM,
           titleText: const Text(
             "login failed",
-            style: TextStyle(
-                color: Colors.white
-            ),
+            style: TextStyle(color: Colors.white),
           ),
           messageText: Text(
             e.toString(),
-            style: const TextStyle(
-                color: Colors.white
-            ),
-          )
-      );
-
+            style: const TextStyle(color: Colors.white),
+          ));
     }
   }
 
-  void logOut() async{
+  void logOut() async {
     await auth.signOut();
   }
-
-
-
-
 }

@@ -68,11 +68,12 @@ class _HomeState extends State<Home> {
     // print(allFiles.length);
 
     await Future.forEach<Reference>(allFiles, (file) async {
-        final String fileUrl = await file.getDownloadURL();
+      final String fileUrl = await file.getDownloadURL();
 
-        SrcModel src = new SrcModel(portrait: fileUrl);
-        WallpaperModel wallpaperModel = new WallpaperModel(src: src, avg_color: '#000000');
-        wallpapers.add(wallpaperModel);
+      SrcModel src = new SrcModel(portrait: fileUrl);
+      WallpaperModel wallpaperModel =
+          new WallpaperModel(src: src, avg_color: '#000000');
+      wallpapers.add(wallpaperModel);
     });
 
     setState(() {});
@@ -102,10 +103,6 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
-
-
-
-
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -114,9 +111,10 @@ class _HomeState extends State<Home> {
         centerTitle: true,
         backgroundColor: Colors.white,
         elevation: 0.0,
-        iconTheme: IconThemeData(color: Colors.blue,),
+        iconTheme: IconThemeData(
+          color: Colors.blue,
+        ),
       ),
-
 
       //drawer :
 
@@ -132,9 +130,6 @@ class _HomeState extends State<Home> {
           ),
         ),
       ),
-
-
-
 
       body: SingleChildScrollView(
         child: Container(
@@ -254,7 +249,6 @@ class _HomeState extends State<Home> {
 
   //new data added::
 
-
   Widget MyDrawerList() {
     return Container(
       padding: EdgeInsets.only(
@@ -298,19 +292,19 @@ class _HomeState extends State<Home> {
               currentPage = DrawerSections.Home;
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) =>  Home()),
+                MaterialPageRoute(builder: (context) => Home()),
               );
             } else if (id == 2) {
               currentPage = DrawerSections.Favourites;
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) =>  FavouriteSplash()),
+                MaterialPageRoute(builder: (context) => FavouriteSplash()),
               );
             } else if (id == 3) {
               currentPage = DrawerSections.MyWallpapers;
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) =>  MyWallpapersSplash()),
+                MaterialPageRoute(builder: (context) => MyWallpapersSplash()),
               );
             } else if (id == 4) {
               currentPage = DrawerSections.Contacts;
@@ -325,7 +319,6 @@ class _HomeState extends State<Home> {
               AuthController.instance.logOut();
             }
           });
-
         },
         child: Padding(
           padding: EdgeInsets.all(15.0),
@@ -355,6 +348,7 @@ class _HomeState extends State<Home> {
     );
   }
 }
+
 enum DrawerSections {
   Home,
   Favourites,
@@ -417,28 +411,4 @@ class CategoriesTile extends StatelessWidget {
   }
 }
 
-
 //drawerlist code:
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
