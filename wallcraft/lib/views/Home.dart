@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:math';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -26,7 +27,9 @@ import 'package:image_picker/image_picker.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 class Home extends StatefulWidget {
-  const Home({Key? key}) : super(key: key);
+  // const Home({Key? key}) : super(key: key);
+
+  late int random_num;
 
   @override
   State<Home> createState() => _HomeState();
@@ -42,21 +45,38 @@ class _HomeState extends State<Home> {
 
   TextEditingController searchController = new TextEditingController();
 
+  void initializeWallpapers(){
+    for(int i=0; i<80; i++){
+      SrcModel srcModel = new SrcModel();
+      // https://miro.medium.com/max/1080/0*DqHGYPBA-ANwsma2.gif
+      // srcModel.portrait = 'assets/wallLoad.gif';
+      WallpaperModel wallpaperModel = new WallpaperModel(src: srcModel);
+      // wallpaperModel = WallpaperModel.fromMap(element);
+      wallpaperModel.avg_color = "#ffffff";
+      wallpapers.add(wallpaperModel);
+    }
+  }
+
   getTrendingWallpapers() async {
     var response = await http.get(
-        Uri.parse("https://api.pexels.com/v1/curated?per_page=80&page=14"),
+        Uri.parse("https://api.pexels.com/v1/curated?per_page=80&page=${widget.random_num}"),
         headers: {"Authorization": apiKey});
 
     // print(response.body.toString());
 
     Map<String, dynamic> jsonData = jsonDecode(response.body);
+    // wallpapers.clear();
+    var i=0;
     jsonData["photos"].forEach((element) {
       // print(element);
       SrcModel srcModel = new SrcModel();
+      // srcModel.portrait = 'https://images.pexels.com/photos/1853043/pexels-photo-1853043.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=1200&w=800';
       WallpaperModel wallpaperModel = new WallpaperModel(src: srcModel);
       wallpaperModel = WallpaperModel.fromMap(element);
       wallpaperModel.avg_color = element["avg_color"];
-      wallpapers.add(wallpaperModel);
+      // wallpapers.add(wallpaperModel);
+      wallpapers[i] = wallpaperModel;
+      i++;
     });
 
     final ListResult result = await FirebaseStorage.instance
@@ -81,6 +101,11 @@ class _HomeState extends State<Home> {
 
   @override
   void initState() {
+
+    // var intValue = Random().nextInt(10); // Value is >= 0 and < 10.
+    widget.random_num = Random().nextInt(100)+1;
+    print("pixel page number: ${widget.random_num}");
+    initializeWallpapers();
     getTrendingWallpapers();
     categories = getCategories();
     super.initState();
@@ -381,12 +406,19 @@ class CategoriesTile extends StatelessWidget {
           children: [
             ClipRRect(
                 borderRadius: BorderRadius.circular(8),
-                child: Image.network(
-                  imgUrl,
-                  height: 50,
-                  width: 100,
-                  fit: BoxFit.cover,
-                )),
+                // child: Image.network(
+                //   imgUrl,
+                //   height: 50,
+                //   width: 100,
+                //   fit: BoxFit.cover,
+                // )
+                child: Image(
+                    image: AssetImage(imgUrl),
+                    height: 50,
+                    width: 100,
+                    fit: BoxFit.cover,
+                ),
+            ),
             Container(
               alignment: Alignment.center,
               decoration: BoxDecoration(

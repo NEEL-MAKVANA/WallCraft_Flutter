@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -61,6 +62,35 @@ class _FavoritesState extends State<Favorites> {
     //   });
     // });
 
+    final snapshot = await favourites.where("uid", isEqualTo: UserId()).get();
+    print("snapshot: ${snapshot.size}");
+    for (int i = 0; i < snapshot.size; i++) {
+      SrcModel src = new SrcModel();
+      WallpaperModel wallpaperModel =
+      new WallpaperModel(src: src, avg_color: '#000000');
+      wallpapers.add(wallpaperModel);
+    }
+    setState(() {});
+
+    try {
+      final result = await InternetAddress.lookup('example.com');
+      if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
+
+      }
+    } on SocketException catch (_) {
+      // final snapshot = await favourites.where("uid", isEqualTo: UserId()).get();
+      // print("snapshot: ${snapshot.size}");
+      // for (int i = 0; i < snapshot.size; i++) {
+      //   SrcModel src = new SrcModel();
+      //   WallpaperModel wallpaperModel =
+      //       new WallpaperModel(src: src, avg_color: '#000000');
+      //   wallpapers.add(wallpaperModel);
+      // }
+      // setState(() {});
+      return;
+    }
+
+    var i=0;
     favourites
         .where("uid", isEqualTo: UserId())
         .get()
@@ -72,7 +102,8 @@ class _FavoritesState extends State<Favorites> {
             src: src,
             photographer: element['photographer'],
             avg_color: element['avg_color']);
-        wallpapers.add(wallpaperModel);
+        wallpapers[i] = wallpaperModel;
+        i++;
         setState(() {});
       });
     });
@@ -91,6 +122,7 @@ class _FavoritesState extends State<Favorites> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
         title: brandName(MediaQuery.of(context).size.width,
             MediaQuery.of(context).size.height),

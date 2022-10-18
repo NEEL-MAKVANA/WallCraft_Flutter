@@ -15,6 +15,11 @@ class WallpaperModel{
       photographer: jsonData["photographer"]
     );
   }
+
+  String getPortrait(){
+    print("Src Portrait: " + this.src.portrait);
+    return this.src.portrait;
+  }
 }
 
 class SrcModel{

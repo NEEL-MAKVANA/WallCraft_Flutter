@@ -212,10 +212,12 @@ class _ImageViewState extends State<ImageView> {
             child: Container(
                 height: MediaQuery.of(context).size.height,
                 width: MediaQuery.of(context).size.width,
-                child: Image.network(
+                child: widget.imgUrl != '' ?Image.network(
                   widget.imgUrl,
                   fit: BoxFit.cover,
-                )),
+                ):
+                Image(image: AssetImage('assets/wallLoad.gif')),
+            ),
           ),
           Container(
             height: MediaQuery.of(context).size.height,

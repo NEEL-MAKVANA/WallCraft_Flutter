@@ -9,7 +9,29 @@ List<CategoriesModel> getCategories() {
   //
 
   categorieModel.imgUrl =
-      "https://images.pexels.com/photos/545008/pexels-photo-545008.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500";
+  "assets/dark.jpg";
+
+  categorieModel.categoriesName = "Dark";
+
+  categories.add(categorieModel);
+
+  categorieModel = new CategoriesModel();
+
+  //
+
+  categorieModel.imgUrl =
+  "assets/colorful.jpg";
+
+  categorieModel.categoriesName = "Color";
+
+  categories.add(categorieModel);
+
+  categorieModel = new CategoriesModel();
+
+  //
+
+  categorieModel.imgUrl =
+      "assets/street_art.jpg";
 
   categorieModel.categoriesName = "Street Art";
 
@@ -20,7 +42,7 @@ List<CategoriesModel> getCategories() {
   //
 
   categorieModel.imgUrl =
-      "https://images.pexels.com/photos/704320/pexels-photo-704320.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500";
+      "assets/wild_life.jpg";
 
   categorieModel.categoriesName = "Wild Life";
 
@@ -31,7 +53,7 @@ List<CategoriesModel> getCategories() {
   //
 
   categorieModel.imgUrl =
-      "https://images.pexels.com/photos/34950/pexels-photo.jpg?auto=compress&cs=tinysrgb&dpr=2&w=500";
+      "assets/nature.jpg";
 
   categorieModel.categoriesName = "Nature";
 
@@ -46,7 +68,7 @@ List<CategoriesModel> getCategories() {
 
 
   categorieModel.imgUrl =
-      "https://images.pexels.com/photos/466685/pexels-photo-466685.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500";
+      "assets/city.jpg";
 
   categorieModel.categoriesName = "City";
 
@@ -58,7 +80,7 @@ List<CategoriesModel> getCategories() {
 
 
   categorieModel.imgUrl =
-      "https://images.pexels.com/photos/2116475/pexels-photo-2116475.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500";
+      "assets/bike.jpg";
 
   categorieModel.categoriesName = "Bikes";
 
@@ -69,7 +91,7 @@ List<CategoriesModel> getCategories() {
   //
 
   categorieModel.imgUrl =
-      "https://images.pexels.com/photos/1149137/pexels-photo-1149137.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500";
+      "assets/cars.jpg";
 
   categorieModel.categoriesName = "Cars";
 
